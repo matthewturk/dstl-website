@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import logo from '$lib/images/svelte-logo.svg';
 	import github from '$lib/images/github.svg';
+	import Header from '../stories/Header.svelte';
 </script>
 
 <header>
@@ -12,6 +13,7 @@
 	</div>
 
 	<nav>
+		<Header user={{"name":"Jane Doe"}} event_login={undefined} event_logout={undefined} event_createAccount={undefined}/>
 		<svg viewBox="0 0 2 3" aria-hidden="true">
 			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
 		</svg>
