@@ -9,7 +9,7 @@
 </script>
 
 <!-- App Shell -->
-<AppShell>
+<AppShell slotSidebarLeft="bg-surface-500/5 w-56 p-4">
 	<svelte:fragment slot="header">
 		<!-- App Bar -->
 		<AppBar>
@@ -45,5 +45,13 @@
 		</AppBar>
 	</svelte:fragment>
 	<!-- Page Route Content -->
+	<svelte:fragment slot="sidebarLeft">
+		<nav class="list-nav">
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="/about">About DSTL</a></li>
+			</ul>
+		</nav>
+	</svelte:fragment>
 	<slot />
 </AppShell>
