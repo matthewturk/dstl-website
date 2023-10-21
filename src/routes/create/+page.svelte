@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
+    import { fade } from "svelte/transition";
 
 	const step1Options = [
 		{
@@ -31,7 +32,7 @@
 </ListBox>
 
 {#if need == 0}
-	<div class="p-4">
+	<div class="p-4" transition:fade={{ duration: 200 }}>
 		<ListBox>
 			<div class="w-full text-token grid grid-cols-1 md:grid-cols-2 gap-4">
 				{#each Array.from({ length: 8 }) as _, i}

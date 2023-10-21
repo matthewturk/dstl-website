@@ -51,6 +51,8 @@
 				<li><a href="/">Home</a></li>
 				<li><a href="/about">About DSTL</a></li>
 				<li><a href="/create">Create a Story</a></li>
+				<li><a href="/stories">My Stories</a></li>
+				<li><a href="/datasets">My Datasets</a></li>
 			</ul>
 		</nav>
 	</svelte:fragment>
