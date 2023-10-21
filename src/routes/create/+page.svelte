@@ -1,19 +1,53 @@
 <script lang="ts">
-	import { ListBox, ListBoxItem } from "@skeletonlabs/skeleton";
+	import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
 
-    const step1Options = [
-        {icon: "needsassess.png", text: "Understand the real needs of their communities", value: "needsassess"},
-        {icon: "meetneeds.png", text: "Serve the needs of their communities", value: "meetneeds"},
-        {icon: "equitable.png", text: "Keep up with other libraries", value: "equitable"},
-        {icon: "strength.png", text: "Build on existing strengths", value: "strengths"},
-        {icon: "deficits.png", text: "Address deficits", value: "deficits"}
-    ];
-    let need: string = '';
+	const step1Options = [
+		{
+			icon: 'motivations-needsassess.png',
+			text: 'Understand the real needs of their communities',
+			value: 'needsassess'
+		},
+		{
+			icon: 'motivations-meetneeds.png',
+			text: 'Serve the needs of their communities',
+			value: 'meetneeds'
+		},
+		{ icon: 'motivations-equitable.png', text: 'Keep up with other libraries', value: 'equitable' },
+		{ icon: 'motivations-strength.png', text: 'Build on existing strengths', value: 'strengths' },
+		{ icon: 'motivations-deficits.png', text: 'Address deficits', value: 'deficits' }
+	];
+	let need: number = -1;
+	let thing: number = -1;
 </script>
-<ListBox noMultiple>
-  	{#each step1Options as option, i}
-        <ListBoxItem bind:group={need} name="{option.value}" value="{option.value}"><svelte:fragment slot="lead"><img width="50px" alt="{option.text}" src="{option.icon}"/></svelte:fragment>{option.text}</ListBoxItem>
+
+<ListBox>
+	{#each step1Options as option, i}
+		<ListBoxItem bind:group={need} name={option.value} value={i}
+			><svelte:fragment slot="lead"
+				><img width="50px" alt={option.text} src={option.icon} /></svelte:fragment
+			>{option.text}</ListBoxItem
+		>
 	{/each}
 </ListBox>
 
-<p>{need}</p>
+{#if need == 0}
+	<div class="p-4">
+		<ListBox>
+			<div class="w-full text-token grid grid-cols-1 md:grid-cols-2 gap-4">
+				{#each Array.from({ length: 8 }) as _, i}
+					<ListBoxItem
+						class="card p-4 flex justify-center items-center"
+						bind:group={thing}
+						name="Item {i}"
+						value={i}
+					>
+						Item {i}
+						lorem ipsum<br />
+						just lots of stuff<br />
+						fjweihvjrio
+					</ListBoxItem>
+				{/each}
+			</div>
+		</ListBox>
+	</div>
+{/if}
