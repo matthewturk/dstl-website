@@ -1,7 +1,6 @@
 <script>
 	import { Avatar } from '@skeletonlabs/skeleton';
 </script>
-<!-- YOU CAN DELETE EVERYTHING IN THIS PAGE -->
 <div class="container mx-auto p-8 space-y-8">
 
 <Avatar initials="MT" />

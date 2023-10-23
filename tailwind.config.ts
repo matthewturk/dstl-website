@@ -17,6 +17,10 @@ export default {
 			themes: {
 				preset: [
 					{
+						name: 'modern',
+						enhancements: true
+					},
+					{
 						name: 'wintry',
 						enhancements: true,
 					},

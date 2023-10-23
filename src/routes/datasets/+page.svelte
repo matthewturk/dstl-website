@@ -8,5 +8,6 @@
 You have selected:<ul>
 {#each files as thisFile}
   <li>{thisFile}</li>
+  {console.log(thisFile)}
   {/each}
 </ul>
