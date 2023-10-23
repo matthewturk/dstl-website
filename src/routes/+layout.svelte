@@ -17,12 +17,7 @@
 				<strong class="text-xl uppercase">DSTL</strong>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
-				<a
-					class="btn btn-sm variant-ghost-surface"
-					href="/login"
-				>
-					Login
-				</a>
+				<div data-netlify-identity-menu></div>
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
