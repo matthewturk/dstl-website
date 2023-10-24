@@ -17,7 +17,7 @@
 				<strong class="text-xl uppercase">DSTL</strong>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
-				<div data-netlify-identity-menu></div>
+				<div data-netlify-identity-button>&nbsp;</div>
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
