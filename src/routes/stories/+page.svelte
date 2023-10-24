@@ -6,14 +6,14 @@
 
 	let data = {
 		table: [
-			{ category: 'A', amount: 28, cat2: 'H' },
-			{ category: 'B', amount: 55, cat2: 'G'},
-			{ category: 'C', amount: 43, cat2: 'F'},
-			{ category: 'D', amount: 91, cat2: 'E'},
-			{ category: 'E', amount: 81, cat2: 'D'},
-			{ category: 'F', amount: 53, cat2: 'C'},
-			{ category: 'G', amount: 19, cat2: 'B'},
-			{ category: 'H', amount: 87, cat2: 'A'}
+			{ library: 'A', op_income: 644506, building_condition: 'Average' },
+			{ library: 'B', op_income: 112855, building_condition: 'Fair'},
+			{ library: 'C', op_income: 58461, building_condition: 'Poor'},
+			{ library: 'D', op_income: 33194, building_condition: 'Average'},
+			{ library: 'E', op_income: 39817, building_condition: 'Average'},
+			{ library: 'F', op_income: 40841, building_condition: 'Good'},
+			{ library: 'G', op_income: 49556, building_condition: 'Average'},
+			{ library: 'H', op_income: 55531, building_condition: 'Average'}
 		]
 	};
 	let spec: VisualizationSpec = {
@@ -24,15 +24,15 @@
 		},
 		mark: 'bar',
 		encoding: {
-			x: { field: 'category', type: 'nominal' },
-			y: { field: 'amount', type: 'quantitative' }
+			x: { field: 'library', type: 'nominal' },
+			y: { field: 'op_income', type: 'quantitative' }
 		}
 	};
 
     function updateSpec(): void {
         console.log("Hi");
         spec.title = "new title";
-        data.table[0].amount = 50;
+        data.table[0].op_income = 129340;
         data = {table: []};
         console.log(myView);
     }
