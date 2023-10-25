@@ -55,18 +55,18 @@
 <div class="w-5/6">
 	<div class="p-4" transition:fade={{ duration: 200 }}>
 		<ListBox>
-			<div class="h-full w-full flex-col grid grid-cols-1 md:grid-cols-3 gap-4">
+			<div class="h-full w-full flex-col grid grid-cols0 md:grid-cols-3 align-top gap-4">
 				{#each narrativeOptions as option, i}
 					<ListBoxItem
-						class="card p-4 flex justify-center objects-top h-20"
+						class="card p-4 flex justify-center objects-top h-40"
 						bind:group={narrative}
 						name="Item {i}"
 						value={i}
 						>
-						<header class="bg-primary-50 flex justify-center items-center card-header">
+						<header class="flex h-14 justify-center items-center card-header">
 							<img alt={option.text} class="h-12" src={option.icon} />
 						</header>
-						<section class="pt-2 items-center justify-center text-center">{option.text}</section>
+						<section class="pt-2 h-10 items-center justify-center text-center">{option.text}</section>
 						<footer class="card-fooder p-4 text-center"><h3>{option.title}</h3></footer>
 					</ListBoxItem>
 				{/each}
