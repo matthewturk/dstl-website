@@ -5,14 +5,17 @@
 	const narrativeOptions = [
 		{
 			icon: 'benchmarking.png',
+			title: 'Benchmarking',
 			text: 'A narrative focused on benchmarking performance.'
 		},
 		{
 			icon: 'achievement_narrative.png',
+			title: 'Achievement',
 			text: 'A story describing a particular achievement.'
 		},
 		{
 			icon: 'justification.png',
+			title: 'Justification',
 			text: 'Justifying or examining past decisions.'
 		}
 	];
@@ -37,7 +40,12 @@
 			text: 'Identifying those areas the library \
 				that are already performing well, but that could be augmented or otherwise supported.'
 		},
-		{ icon: 'motivations-deficits.png', title: 'Address deficits', value: 'deficits', text: 'Where needs are not being met, identifying appropriate ways to address those needs can be based on data-driven understanding.'}
+		{
+			icon: 'motivations-deficits.png',
+			title: 'Address deficits',
+			value: 'deficits',
+			text: 'Where needs are not being met, identifying appropriate ways to address those needs can be based on data-driven understanding.'
+		}
 	];
 	let need: number = -1;
 	let thing: number = -1;
@@ -47,16 +55,19 @@
 <div class="w-5/6">
 	<div class="p-4" transition:fade={{ duration: 200 }}>
 		<ListBox>
-			<div class="w-full flex-col grid grid-cols-1 md:grid-cols-3 gap-4">
+			<div class="h-full w-full flex-col grid grid-cols-1 md:grid-cols-3 gap-4">
 				{#each narrativeOptions as option, i}
 					<ListBoxItem
-						class="card p-4 flex justify-center items-center h-full"
+						class="card p-4 flex justify-center objects-top h-20"
 						bind:group={narrative}
 						name="Item {i}"
 						value={i}
-					>
-					<header class="flex justify-center items-center card-header"><img alt="{option.text}" class="w-10" src="{option.icon}"/></header>
-					<section class="pt-2 items-center justify-center text-center">{option.text}</section>
+						>
+						<header class="bg-primary-50 flex justify-center items-center card-header">
+							<img alt={option.text} class="h-12" src={option.icon} />
+						</header>
+						<section class="pt-2 items-center justify-center text-center">{option.text}</section>
+						<footer class="card-fooder p-4 text-center"><h3>{option.title}</h3></footer>
 					</ListBoxItem>
 				{/each}
 			</div>
