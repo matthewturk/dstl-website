@@ -47,6 +47,59 @@
 			text: 'Where needs are not being met, identifying appropriate ways to address those needs can be based on data-driven understanding.'
 		}
 	];
+	/* const narrativeOptions = [
+		{
+			icon: 'motivations-needsassess.png',
+			title: 'Understand the real needs of their communities',
+			value: 'needsassess',
+			text: 'Data can provide insights beyond anecodtal experiences or intuition.'
+		},
+		{
+			icon: 'motivations-meetneeds.png',
+			title: 'Serve the needs of their communities',
+			value: 'meetneeds',
+			text: 'Focusing on the needs of the members of the community, how can those needs be identified and met?'
+		},
+		{
+			icon: 'motivations-strength.png',
+			title: 'Build on existing strengths',
+			value: 'strengths',
+			text: 'Identifying those areas the library \
+				that are already performing well, but that could be augmented or otherwise supported.'
+		},
+		{
+			icon: 'motivations-deficits.png',
+			title: 'Address deficits',
+			value: 'deficits',
+			text: 'Where needs are not being met, identifying appropriate ways to address those needs can be based on data-driven understanding.'
+		}
+	]; */
+	 const attitudeOptions = [
+		{
+			icon: 'positive_orange.png',
+			title: 'Positive',
+			value: 'positive',
+			text: 'The audience is likely to support your argument and agree with your motivation.'
+		},
+		{
+			icon: 'negative_orange.png',
+			title: 'Negative',
+			value: 'negative',
+			text: 'The audience is likely to disagree with your argument and agree with your motivation.'
+		},
+		{
+			icon: 'mixed_orange.png',
+			title: 'Mixed',
+			value: 'mixed',
+			text: 'Some of the audience agree with your argument and motivation but some do not.'
+		},
+		{
+			icon: 'polarized_orange.png',
+			title: 'Polarized',
+			value: 'polarized',
+			text: 'Some of the audience is misinformed and disinforming others, so the audience is strongly divided.'
+		}
+	]; 
 	let need: number = -1;
 	let thing: number = -1;
 	let narrative: number = -1;
