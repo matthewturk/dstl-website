@@ -53,8 +53,10 @@
   }
 
   function visualizeData() {
-    if (xColumn && yColumn) {
+    if (xColumn && yColumn && jsonDataArray.length > 0) {
       const canvas = document.getElementById("chartCanvas");
+      canvas.width = 600; // Set desired width
+      canvas.height = 400; // Set desired height
       const ctx = canvas.getContext("2d");
 
       const data = {
@@ -71,25 +73,11 @@
       };
 
       new Chart(ctx, {
-        type: "bar", // Change chart type as needed (e.g., 'line', 'pie', 'radar', etc.)
+        type: "bar",
         data: data,
         options: {
-          responsive: true,
+          responsive: false, // Disable responsiveness
           maintainAspectRatio: false,
-          scales: {
-            xAxes: [{
-              scaleLabel: {
-                display: true,
-                labelString: xColumn,
-              },
-            }],
-            yAxes: [{
-              scaleLabel: {
-                display: true,
-                labelString: yColumn,
-              },
-            }],
-          },
         },
       });
     }
