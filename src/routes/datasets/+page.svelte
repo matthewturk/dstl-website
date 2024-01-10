@@ -1,5 +1,6 @@
 
 <script lang="ts">
+	import MarkdownContent from "$lib/MarkdownContent.svelte";
   import { FileButton } from "@skeletonlabs/skeleton";
   let files: FileList = [];
   let jsonDataArray = []; // Store JSON data
@@ -84,6 +85,7 @@
   }
 </script>
 
+<MarkdownContent pagename="datasets">
 <FileButton name="files" multiple=true bind:files={files} on:change={convertFilesToJson} />
 
 You have selected:
@@ -117,3 +119,5 @@ You have selected:
 </div>
 
 <canvas id="chartCanvas"></canvas>
+
+</MarkdownContent>

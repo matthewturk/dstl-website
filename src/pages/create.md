@@ -1,6 +1,3 @@
-# This is a page.
+# Create!
 
-Example markdown!
-
-1. hi
-2. there
+We are working to develop a system for creating data visualizations using your data, designed for your library.
