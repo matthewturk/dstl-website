@@ -1,5 +1,6 @@
 <script>
 	import { Avatar } from '@skeletonlabs/skeleton';
+	export let data;
 </script>
 <div class="container mx-auto p-8 space-y-8">
 

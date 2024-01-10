@@ -1,13 +1,15 @@
 import adapter from '@sveltejs/adapter-netlify';
+import path from 'path';
 import { vitePreprocess } from '@sveltejs/kit/vite';
+import {mdsvex} from 'mdsvex';
 
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	extensions: ['.svelte'],
+	extensions: ['.svelte', '.md'],
 	// Consult https://kit.svelte.dev/docs/integrations#preprocessors
 	// for more information about preprocessors
-	preprocess: [ vitePreprocess()],
+	preprocess: [ vitePreprocess(), mdsvex({extensions: ['.md']})],
 	
 	vitePlugin: {
 		inspector: true,
@@ -25,7 +27,10 @@ const config = {
 			// instead of creating a single one for the entire app.
 			// if `edge` is true, this option cannot be used
 			split: false}
-		)
+		),
+		alias: {
+		  '@pages': path.resolve('pages/'),
+		}
 	}
 };
 export default config;

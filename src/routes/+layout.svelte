@@ -6,6 +6,7 @@
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+	export let data;
 </script>
 
 <!-- App Shell -->
@@ -33,5 +34,6 @@
 			</ul>
 		</nav>
 	</svelte:fragment>
-	<slot />
+	<svelte:component this={data.content}/>
+	<slot/>
 </AppShell>
