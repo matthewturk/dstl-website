@@ -7,6 +7,7 @@
 	//import { Chart as ChartJS, Title, Tooltip, Legend, LineElement, LinearScale, PointElement, CategoryScale } from 'chart.js';
 	import 'chart.js/auto';
 	import type { ChartData, ChartDataset } from 'chart.js';
+	import DataProcessor from '$lib/nodes/DataProcessor.svelte';
 	//borderColor: 'rgba(75, 192, 192, 1)',
 
 	let plotType = "line";
@@ -68,6 +69,9 @@
 		<div id="json-data-display" class="p-4 m-4 flex objects-top">
 			<JSONTree {value} />
 		</div>
+	</div>
+	<div class="w-5/6 h-full bg-white">
+	<DataProcessor/>
 	</div>
 	<div class="w-5/6 bg-surface-500">
 		{#if value.length > 0}
