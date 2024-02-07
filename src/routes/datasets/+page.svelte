@@ -1,119 +1,99 @@
-
 <script lang="ts">
-  import { FileButton } from "@skeletonlabs/skeleton";
-  let files: FileList = [];
-  let jsonDataArray = []; // Store JSON data
-  let xColumn = ""; // Selected column for X-axis
-  let yColumn = ""; // Selected column for Y-axis
-  let xColumns: string[] = []; // Available X-axis columns
-  let yColumns: string[] = []; // Available Y-axis columns
+	import MarkdownContent from '$lib/MarkdownContent.svelte';
+	import * as Papa from 'papaparse';
+	import { FileButton } from '@skeletonlabs/skeleton';
+	import JSONTree from 'svelte-json-tree';
+	import { Line, Scatter, Bar } from 'svelte-chartjs';
+	//import { Chart as ChartJS, Title, Tooltip, Legend, LineElement, LinearScale, PointElement, CategoryScale } from 'chart.js';
+	import 'chart.js/auto';
+	import type { ChartData, ChartDataset } from 'chart.js';
+	//borderColor: 'rgba(75, 192, 192, 1)',
 
-  async function parseCSVToJson(file) {
-    return new Promise((resolve, reject) => {
-      Papa.parse(file, {
-        header: true,
-        dynamicTyping: true,
-        complete: (results) => {
-          resolve(results.data);
-        },
-        error: (error) => {
-          reject(error);
-        },
-      });
-    });
-  }
+	let plotType = "line";
+	let files: FileList;
+	let value: IValueArray[] = [];
+	let fields: string[] = [];
+	let dataToPlot: ChartData<any, number[]> = { labels: [], datasets: [] };
+	let xColumn = ''; // Selected column for X-axis
+	let yColumn = ''; // Selected column for Y-axis
 
-  async function convertFilesToJson() {
-    jsonDataArray = []; // Reset previous data
-    xColumns = []; // Reset X-axis columns
-    yColumns = []; // Reset Y-axis columns
+	interface IValueArray{
+		[key: string]: number;
+	}
 
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const jsonData = await parseCSVToJson(file);
-      jsonDataArray.push(jsonData);
-    }
+	const parseCSV = (file: File): Promise<Papa.ParseResult<any>> => {
+		return new Promise((resolve, reject) => {
+			Papa.parse(file, {
+				complete: resolve,
+				dynamicTyping: true,
+				header: true,
+				error: reject
+			});
+		});
+	};
 
-    if (jsonDataArray.length > 0) {
-      const columns = Object.keys(jsonDataArray[0][0] || {});
-      xColumns = columns;
-      yColumns = columns;
-    }
-    displayJsonData()
-  }
+	$: {
+		dataToPlot = {
+			labels: value.map((e) => e[xColumn]),
+			datasets: [{ label: yColumn, data: value.map(e => e[yColumn]) }]
+		};
+	}
 
-  function displayJsonData() {
-    const jsonDataDisplay = document.getElementById("json-data-display");
-    jsonDataDisplay.innerHTML = ""; // Clear previous content
-    jsonDataArray.forEach((data, index) => {
-      const jsonDataElement = document.createElement("pre");
-      jsonDataElement.textContent = `File ${index + 1}: \n${JSON.stringify(data, null, 2)}`;
-      jsonDataDisplay.appendChild(jsonDataElement);
-    });
-  }
+	async function parseFile() {
+		console.log(files[0]);
 
-  function visualizeData() {
-    if (xColumn && yColumn && jsonDataArray.length > 0) {
-      const canvas = document.getElementById("chartCanvas");
-      canvas.width = 600; // Set desired width
-      canvas.height = 400; // Set desired height
-      const ctx = canvas.getContext("2d");
+		let results: Papa.ParseResult<any>;
+		try {
+			results = await parseCSV(files[0]);
+		} catch (error) {
+			console.error('Error:', error);
+			return;
+		}
 
-      const data = {
-        labels: jsonDataArray[0].map((item) => item[xColumn]),
-        datasets: [
-          {
-            label: yColumn,
-            data: jsonDataArray[0].map((item) => item[yColumn]),
-            backgroundColor: "rgba(75, 192, 192, 0.2)",
-            borderColor: "rgba(75, 192, 192, 1)",
-            borderWidth: 1,
-          },
-        ],
-      };
-
-      new Chart(ctx, {
-        type: "bar",
-        data: data,
-        options: {
-          responsive: false, // Disable responsiveness
-          maintainAspectRatio: false,
-        },
-      });
-    }
-  }
+		fields = [...(results.meta.fields || [])];
+		value = [...results.data];
+	}
 </script>
 
-<FileButton name="files" multiple=true bind:files={files} on:change={convertFilesToJson} />
+<MarkdownContent pagename="datasets">
+	<div class="w-5/6 grid grid-cols-2">
+		<div class="p-4 m-4 flex objects-top">
+			<FileButton name="file" multiple="false" bind:files on:change={parseFile} />
+			<select id="plotType" bind:value={plotType}>
+				<option value="line">Line</option>
+				<option value="scatter">Scatter</option>
+				<option value="bar">Bar</option>
+			</select>
+		</div>
+		<div id="json-data-display" class="p-4 m-4 flex objects-top">
+			<JSONTree {value} />
+		</div>
+	</div>
+	<div class="w-5/6 bg-surface-500">
+		{#if value.length > 0}
+			<label for="xcol">Select X-axis Column: </label>
+			<select id="xcol" bind:value={xColumn}>
+				{#each fields as field}
+					<option value={field}>{field}</option>
+				{/each}
+			</select>
 
-You have selected:
-<ul>
-  {#each files as thisFile}
-    <li>{thisFile.name}</li>
-  {/each}
-</ul>
+			<label for="ycol">Select Y-axis Column: </label>
+			<select id="ycol" bind:value={yColumn}>
+				{#each fields as field}
+					<option value={field}>{field}</option>
+				{/each}
+			</select>
+		{/if}
+	</div>
 
-<div id="json-data-display">
-  <!-- JSON data will be displayed here -->
-</div>
-<div>
-  {#if jsonDataArray.length > 0}
-    <label>Select X-axis Column: </label>
-    <select bind:value={xColumn}>
-      {#each xColumns as column}
-        <option value={column}>{column}</option>
-      {/each}
-    </select>
-
-    <label>Select Y-axis Column: </label>
-    <select bind:value={yColumn}>
-      {#each yColumns as column}
-        <option value={column}>{column}</option>
-      {/each}
-    </select>
-
-    <button on:click={visualizeData}>Visualize</button>
-  {/if}
-</div>
-
-<canvas id="chartCanvas"></canvas>
+	{#if plotType == "line"}
+	<Line class="w-5/6 bg-white h-32" options={{responsive:true}} data={dataToPlot} />
+	{:else if plotType == "scatter"}
+	<Scatter class="w-5/6 bg-white h-32" options={{responsive:true}} data={dataToPlot} />
+	{:else if plotType == "bar"}
+	<Bar class="w-5/6 bg-white h-32" options={{responsive:true}} data={dataToPlot} />
+	{:else}
+		<p>Plot type not supported</p>
+	{/if}
+</MarkdownContent>

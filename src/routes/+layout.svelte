@@ -33,5 +33,5 @@
 			</ul>
 		</nav>
 	</svelte:fragment>
-	<slot />
+	<slot/>
 </AppShell>

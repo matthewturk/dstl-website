@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
+	import MarkdownContent from '$lib/MarkdownContent.svelte';
+import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
 	import { fade } from 'svelte/transition';
 
 	const narrativeOptions = [
@@ -51,6 +52,8 @@
 	let thing: number = -1;
 	let narrative: number = -1;
 </script>
+
+<MarkdownContent pagename="create"/>
 
 <ListBox class="w-5/6 grid grid-cols-3">
 	{#each narrativeOptions as option, i}
