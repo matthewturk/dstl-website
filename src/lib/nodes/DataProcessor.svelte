@@ -1,7 +1,11 @@
 <script lang="ts">
+
+  import '@xyflow/svelte/dist/style.css';
+import 'tailwindcss/tailwind.css';
 	import { writable } from 'svelte/store';
 	import {
 		SvelteFlow,
+		SvelteFlowProvider,
 		Background,
 		Controls,
 		MiniMap,
@@ -38,9 +42,11 @@
 </script>
 
 <div class="w-full h-full">
+	<SvelteFlowProvider>
 	<SvelteFlow {nodes} {edges} {nodeTypes} fitView>
-		<Background patternColor="#aaa" gap={16} />
+		<MiniMap class="bg-slate-900" zoomable pannable height={120}/>
 		<Controls />
-		<MiniMap zoomable pannable height={120} />
+		<Background class="bg-slate-500" gap={16} />
 	</SvelteFlow>
+</SvelteFlowProvider>
 </div>
