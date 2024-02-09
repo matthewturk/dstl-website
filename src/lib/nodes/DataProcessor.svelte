@@ -17,12 +17,14 @@
 	import ImportNode from './ImportNode.svelte';
 	import UploadFileNode from './UploadFileNode.svelte';
 	import PropertiesNode from './PropertiesNode.svelte';
+	import GraphWrapperNode from './GraphWrapperNode.svelte';
 	const nodeTypes = {
 		sortNode: SortNode,
 		aggregateNode: AggregateNode,
 		importNode: ImportNode,
 		uploadNode: UploadFileNode,
-		propertiesNode: PropertiesNode
+		propertiesNode: PropertiesNode,
+		graphWrapperNode: GraphWrapperNode
 	};
 	const nodes = writable<Node[]>([
 		{
@@ -63,6 +65,12 @@
 			id: '6',
 			type: 'propertiesNode',
 			position: { x: 350, y: 100 },
+			data: {}
+		},
+		{
+			id: '7',
+			type: 'graphWrapperNode',
+			position: { x: 400, y: 100 },
 			data: {}
 		}
 	]);
