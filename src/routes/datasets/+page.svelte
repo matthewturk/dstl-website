@@ -1,7 +1,6 @@
 <script lang="ts">
 	import MarkdownContent from '$lib/MarkdownContent.svelte';
 	import * as Papa from 'papaparse';
-	import { FileButton } from '@skeletonlabs/skeleton';
 	import JSONTree from 'svelte-json-tree';
 	import { Line, Scatter, Bar } from 'svelte-chartjs';
 	//import { Chart as ChartJS, Title, Tooltip, Legend, LineElement, LinearScale, PointElement, CategoryScale } from 'chart.js';
@@ -57,22 +56,7 @@
 </script>
 
 <MarkdownContent pagename="datasets">
-	<div class="w-5/6 grid grid-cols-2">
-		<div class="p-4 m-4 flex objects-top">
-			<FileButton name="file" multiple="false" bind:files on:change={parseFile} />
-			<select id="plotType" bind:value={plotType}>
-				<option value="line">Line</option>
-				<option value="scatter">Scatter</option>
-				<option value="bar">Bar</option>
-			</select>
-		</div>
-		<div id="json-data-display" class="p-4 m-4 flex objects-top">
-			<JSONTree {value} />
-		</div>
-	</div>
-	<div class="w-5/6 h-full bg-white">
 	<DataProcessor/>
-	</div>
 	<div class="w-5/6 bg-surface-500">
 		{#if value.length > 0}
 			<label for="xcol">Select X-axis Column: </label>
