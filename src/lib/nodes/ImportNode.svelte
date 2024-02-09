@@ -4,21 +4,22 @@
 	type $$Props = NodeProps;
 	export let data: $$Props['data'];
 	export let isConnectable: $$Props['isConnectable'];
-
-	const { order } = data;
+	//export let columns: $$Props['columns'];
+	const { url, format } = data;
 </script>
 
-<NodeWrapper label="Sort">
-	<Handle type="target" position={Position.Left} {isConnectable} />
+<NodeWrapper label="Import Data">
+	<input type="text" id="url" value={$url} />
 	<select
-		id="sortOrder"
-		value={$order}
+		id="format"
+		value={$format}
 		on:input={(event) => {
-			$order = event.currentTarget.value;
+			$format = event.currentTarget.value;
 		}}
 	>
-		<option value="ascending">Ascending</option>
-		<option value="descending">Descending</option>
+		<option value="csv">csv</option>
+		<option value="json">json</option>
+		<option value="parquet">parquet</option>
 	</select>
 	<Handle type="source" position={Position.Right} {isConnectable} />
 </NodeWrapper>
