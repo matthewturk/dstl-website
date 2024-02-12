@@ -18,6 +18,7 @@
 	import UploadFileNode from './UploadFileNode.svelte';
 	import PropertiesNode from './PropertiesNode.svelte';
 	import GraphWrapperNode from './GraphWrapperNode.svelte';
+	import ContextMenu from './ContextMenu.svelte';
 	const nodeTypes = {
 		sortNode: SortNode,
 		aggregateNode: AggregateNode,
@@ -78,14 +79,48 @@
 	const initialEdges = []; //{ id: 'e1', source: '1', target: '2' }];
 
 	const edges = writable(initialEdges);
+
+	  let menu: { id: string; top?: number; left?: number; right?: number; bottom?: number } | null;
+  let width: number;
+  let height: number;
+
+  function handleContextMenu({ detail: { event, node } }) {
+    // Prevent native context menu from showing
+    event.preventDefault();
+
+    // Calculate position of the context menu. We want to make sure it
+    // doesn't get positioned off-screen.
+    menu = {
+      id: node.id,
+      top: event.clientY < height - 200 ? event.clientY : undefined,
+      left: event.clientX < width - 200 ? event.clientX : undefined,
+      right: event.clientX >= width - 200 ? width - event.clientX : undefined,
+      bottom: event.clientY >= height - 200 ? height - event.clientY : undefined
+    };
+  }
+  function handlePaneClick() {
+    menu = null;
+  }
 </script>
 
 <div class="w-full h-full">
 	<SvelteFlowProvider>
-		<SvelteFlow {nodes} {edges} {nodeTypes} fitView>
+		<SvelteFlow {nodes} {edges} {nodeTypes} fitView     on:nodecontextmenu={handleContextMenu}
+		on:paneclick={handlePaneClick}>
 			<MiniMap class="bg-slate-900" zoomable pannable height={120} />
 			<Controls />
 			<Background class="bg-slate-500" gap={16} />
+		    <Background />
+    {#if menu}
+      <ContextMenu
+        onClick={handlePaneClick}
+        id={menu.id}
+        top={menu.top}
+        left={menu.left}
+        right={menu.right}
+        bottom={menu.bottom}
+      />
+    {/if}
 		</SvelteFlow>
 	</SvelteFlowProvider>
 </div>
