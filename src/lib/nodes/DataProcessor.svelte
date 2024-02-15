@@ -80,47 +80,55 @@
 
 	const edges = writable(initialEdges);
 
-	  let menu: { id: string; top?: number; left?: number; right?: number; bottom?: number } | null;
-  let width: number;
-  let height: number;
+	let menu: { id: string; top?: number; left?: number; right?: number; bottom?: number } | null;
+	let width: number;
+	let height: number;
 
-  function handleContextMenu({ detail: { event, node } }) {
-    // Prevent native context menu from showing
-    event.preventDefault();
+	function handleContextMenu({ detail: { event } }) {
+		// Prevent native context menu from showing
+		event.preventDefault();
+		console.log("hi");
 
-    // Calculate position of the context menu. We want to make sure it
-    // doesn't get positioned off-screen.
-    menu = {
-      id: node.id,
-      top: event.clientY < height - 200 ? event.clientY : undefined,
-      left: event.clientX < width - 200 ? event.clientX : undefined,
-      right: event.clientX >= width - 200 ? width - event.clientX : undefined,
-      bottom: event.clientY >= height - 200 ? height - event.clientY : undefined
-    };
-  }
-  function handlePaneClick() {
-    menu = null;
-  }
+		// Calculate position of the context menu. We want to make sure it
+		// doesn't get positioned off-screen.
+		menu = {
+			id: node.id,
+			top: event.clientY < height - 200 ? event.clientY : undefined,
+			left: event.clientX < width - 200 ? event.clientX : undefined,
+			right: event.clientX >= width - 200 ? width - event.clientX : undefined,
+			bottom: event.clientY >= height - 200 ? height - event.clientY : undefined
+		};
+	}
+	function handlePaneClick() {
+		menu = null;
+		console.log("there");
+	}
 </script>
 
 <div class="w-full h-full">
 	<SvelteFlowProvider>
-		<SvelteFlow {nodes} {edges} {nodeTypes} fitView     on:nodecontextmenu={handleContextMenu}
-		on:paneclick={handlePaneClick}>
+		<SvelteFlow
+			{nodes}
+			{edges}
+			{nodeTypes}
+			fitView
+			on:panecontextmenu={handleContextMenu}
+			on:paneclick={handlePaneClick}
+		>
 			<MiniMap class="bg-slate-900" zoomable pannable height={120} />
 			<Controls />
 			<Background class="bg-slate-500" gap={16} />
-		    <Background />
-    {#if menu}
-      <ContextMenu
-        onClick={handlePaneClick}
-        id={menu.id}
-        top={menu.top}
-        left={menu.left}
-        right={menu.right}
-        bottom={menu.bottom}
-      />
-    {/if}
+			<Background />
+			{#if menu}
+				<ContextMenu
+					onClick={handlePaneClick}
+					id={menu.id}
+					top={menu.top}
+					left={menu.left}
+					right={menu.right}
+					bottom={menu.bottom}
+				/>
+			{/if}
 		</SvelteFlow>
 	</SvelteFlowProvider>
 </div>
