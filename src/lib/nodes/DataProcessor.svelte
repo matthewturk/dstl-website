@@ -80,7 +80,7 @@
 
 	const edges = writable(initialEdges);
 
-	let menu: { id: string; top?: number; left?: number; right?: number; bottom?: number } | null;
+	let menu: { top?: number; left?: number; right?: number; bottom?: number } | null;
 	let width: number;
 	let height: number;
 
@@ -91,8 +91,8 @@
 
 		// Calculate position of the context menu. We want to make sure it
 		// doesn't get positioned off-screen.
+		console.log(event.clientX, event.clientY);
 		menu = {
-			id: node.id,
 			top: event.clientY < height - 200 ? event.clientY : undefined,
 			left: event.clientX < width - 200 ? event.clientX : undefined,
 			right: event.clientX >= width - 200 ? width - event.clientX : undefined,
@@ -122,7 +122,6 @@
 			{#if menu}
 				<ContextMenu
 					onClick={handlePaneClick}
-					id={menu.id}
 					top={menu.top}
 					left={menu.left}
 					right={menu.right}

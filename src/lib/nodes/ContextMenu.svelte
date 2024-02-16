@@ -2,7 +2,6 @@
     import { useNodes } from '@xyflow/svelte';
 
     export let onClick: (e: MouseEvent) => void;
-    export let id: string;
     export let left: number | undefined;
     export let top: number | undefined;
     export let right: number | undefined;
@@ -28,9 +27,6 @@
   class="context-menu"
   on:click={onClick}
 >
-  <p style="margin: 0.5em;">
-    <small>node: {id}</small>
-  </p>
   <button on:click={addNode('sortNode')}>Add Sort</button>
 </div>
 
