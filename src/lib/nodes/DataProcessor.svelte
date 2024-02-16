@@ -19,13 +19,15 @@
 	import PropertiesNode from './PropertiesNode.svelte';
 	import GraphWrapperNode from './GraphWrapperNode.svelte';
 	import ContextMenu from './ContextMenu.svelte';
+	import SpreadsheetNode from './SpreadsheetNode.svelte';
 	const nodeTypes = {
 		sortNode: SortNode,
 		aggregateNode: AggregateNode,
 		importNode: ImportNode,
 		uploadNode: UploadFileNode,
 		propertiesNode: PropertiesNode,
-		graphWrapperNode: GraphWrapperNode
+		graphWrapperNode: GraphWrapperNode,
+		spreadsheetNode: SpreadsheetNode
 	};
 	const nodes = writable<Node[]>([
 		{
