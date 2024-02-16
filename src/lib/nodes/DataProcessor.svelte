@@ -87,25 +87,22 @@
 	function handleContextMenu({ detail: { event } }) {
 		// Prevent native context menu from showing
 		event.preventDefault();
-		console.log("hi");
 
 		// Calculate position of the context menu. We want to make sure it
 		// doesn't get positioned off-screen.
-		console.log(event.clientX, event.clientY);
 		menu = {
-			top: event.clientY < height - 200 ? event.clientY : undefined,
-			left: event.clientX < width - 200 ? event.clientX : undefined,
-			right: event.clientX >= width - 200 ? width - event.clientX : undefined,
-			bottom: event.clientY >= height - 200 ? height - event.clientY : undefined
+			top: event.offsetY < height - 200 ? event.offsetY : undefined,
+			left: event.offsetX < width - 200 ? event.offsetX : undefined,
+			right: event.offsetX >= width - 200 ? width - event.offsetX : undefined,
+			bottom: event.offsetY >= height - 200 ? height - event.offsetY : undefined
 		};
 	}
 	function handlePaneClick() {
 		menu = null;
-		console.log("there");
 	}
 </script>
 
-<div class="w-full h-full">
+<div class="w-full h-full" bind:clientWidth={width} bind:clientHeight={height}>
 	<SvelteFlowProvider>
 		<SvelteFlow
 			{nodes}
@@ -121,6 +118,7 @@
 			<Background />
 			{#if menu}
 				<ContextMenu
+					{nodeTypes}
 					onClick={handlePaneClick}
 					top={menu.top}
 					left={menu.left}
