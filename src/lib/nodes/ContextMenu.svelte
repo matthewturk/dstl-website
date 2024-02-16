@@ -11,13 +11,12 @@
     const nodes = useNodes();
 
     function addNode(nodeType: string) {
-      console.log("Hi", nodeType);
         $nodes.push({
             id: Math.random().toString(36).substring(7),
             type: nodeType,
             position: {
-                x: Math.random() * 100,
-                y: Math.random() * 100
+                x: (left || 0) + 5,
+                y: (top || 0) + 5
             },
             data: {}
         })
@@ -36,10 +35,8 @@
 
 <style>
     .context-menu {
-      background: white;
-      border-style: solid;
+      @apply bg-tertiary-900;
       box-shadow: 10px 19px 20px rgba(0, 0, 0, 10%);
-      z-index: 10;
     }
   
     .context-menu button {
@@ -51,6 +48,6 @@
     }
   
     .context-menu button:hover {
-      background: white;
+      @apply bg-tertiary-700;
     }
   </style>

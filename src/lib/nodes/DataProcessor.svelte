@@ -113,10 +113,11 @@
 			fitView
 			on:panecontextmenu={handleContextMenu}
 			on:paneclick={handlePaneClick}
+			class="bg-surface-500/5"
 		>
-			<MiniMap class="bg-slate-900" zoomable pannable height={120} />
+			<MiniMap class="bg-surface-900" zoomable pannable height={120} />
 			<Controls />
-			<Background class="bg-slate-500" gap={16} />
+			<Background class="bg-surface-500" gap={16} />
 			<Background />
 			{#if menu}
 				<ContextMenu
