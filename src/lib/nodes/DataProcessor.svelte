@@ -20,15 +20,34 @@
 	import GraphWrapperNode from './GraphWrapperNode.svelte';
 	import ContextMenu from './ContextMenu.svelte';
 	import SpreadsheetNode from './SpreadsheetNode.svelte';
-	const nodeTypes = {
-		sortNode: SortNode,
-		aggregateNode: AggregateNode,
-		importNode: ImportNode,
-		uploadNode: UploadFileNode,
-		propertiesNode: PropertiesNode,
-		graphWrapperNode: GraphWrapperNode,
-		spreadsheetNode: SpreadsheetNode
+	import {
+		ArrowDownTray,
+		ArrowRightEndOnRectangle,
+		ArrowsUpDown,
+		ChartBarSquare,
+		GlobeAlt,
+		InformationCircle,
+		TableCells
+	} from '@steeze-ui/heroicons';
+	const nodeTypeInfo = {
+		sortNode: { component: SortNode, icon: ArrowsUpDown },
+		aggregateNode: { component: AggregateNode, icon: ArrowRightEndOnRectangle },
+		importNode: { component: ImportNode, icon: GlobeAlt },
+		uploadNode: { component: UploadFileNode, icon: ArrowDownTray },
+		propertiesNode: { component: PropertiesNode, icon: InformationCircle },
+		graphWrapperNode: { component: GraphWrapperNode, icon: ChartBarSquare },
+		spreadsheetNode: { component: SpreadsheetNode, icon: TableCells }
 	};
+	let nodeTypes: NodeTypes = {};
+	$: {
+		nodeTypes = Object.fromEntries(
+			Object.entries(nodeTypeInfo).map(([type, { icon, component }]) => [
+				type,
+				component
+			])
+		);
+	}
+	
 	const nodes = writable<Node[]>([
 		{
 			id: '1',
@@ -121,7 +140,7 @@
 			<Background />
 			{#if menu}
 				<ContextMenu
-					{nodeTypes}
+					{nodeTypeInfo}
 					onClick={handlePaneClick}
 					top={menu.top}
 					left={menu.left}

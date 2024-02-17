@@ -35,7 +35,7 @@
 
 </script>
 
-<NodeWrapper label="Spreadsheet">
+<NodeWrapper label="Spreadsheet" resizable={true}>
 <Datatable {handler}>
 	<table>
 		<thead>

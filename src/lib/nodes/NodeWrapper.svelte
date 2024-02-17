@@ -1,13 +1,25 @@
 <script lang="ts">
 	// Borrowed from https://github.com/data-exp-lab/CodeBurl/blob/main/src/routes/nodes/NodeWrapper.svelte
-	import { NodeResizer } from '@xyflow/svelte';
+	import { NodeResizer, NodeToolbar, Position } from '@xyflow/svelte';
+	import { Icon } from '@steeze-ui/svelte-icon';
+	import { DocumentDuplicate, Trash, ArrowsPointingOut, ArrowsPointingIn } from '@steeze-ui/heroicons';
 	export let label: string;
 	export let resizable: boolean = false;
+	export let toolbar: boolean = true;
+	export let expanded: boolean = false;
 </script>
 
 {#if resizable}
 	<NodeResizer minWidth={100} minHeight={60} />
 {/if}
+{#if toolbar}
+	<NodeToolbar position={Position.Top} align="start">
+		<button type="button" class="btn-icon variant-filled"><Icon size="2rem" src="{Trash}"/></button>
+		<button type="button" class="btn-icon variant-filled"><Icon size="2rem" src="{DocumentDuplicate}"/></button>
+		<button type="button" class="btn-icon variant-filled"><Icon size="2rem" src="{expanded ? ArrowsPointingIn : ArrowsPointingOut}"/></button>
+	</NodeToolbar>
+{/if}
+
 
 <div
 	class="flex flex-col border w-full border-solid border-gray-200 h-full rounded-2xl bg-white/70 shadow-[0_7px_9px_0_rgba(0,0,0,0.02)]"

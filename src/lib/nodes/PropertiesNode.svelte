@@ -3,6 +3,7 @@
 		Handle,
 		Position,
 		type NodeProps,
+		NodeToolbar,
 		useNodesData,
 		useSvelteFlow,
 		useHandleConnections
