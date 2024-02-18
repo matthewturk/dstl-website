@@ -1,3 +1,7 @@
+<script lang="ts" context="module">
+	import { ChartBarSquare } from '@steeze-ui/heroicons';
+	export const icon = ChartBarSquare;
+</script>
 <script lang="ts">
 	import {
 		Handle,
@@ -46,7 +50,7 @@
 	}
 </script>
 
-<NodeWrapper label="Graph" resizable={true}>
+<NodeWrapper {icon} label="Graph" resizable={true}>
 	<Handle type="target" position={Position.Left} {isConnectable} />
 	<div class="flex flex-col">
 		<div class="p-2 m-2">

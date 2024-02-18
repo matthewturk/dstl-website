@@ -1,3 +1,7 @@
+<script lang="ts" context="module">
+	import { ArrowRightEndOnRectangle } from '@steeze-ui/heroicons';
+    export const icon = ArrowRightEndOnRectangle;
+</script>
 <script lang="ts">
     import {Handle, Position, type NodeProps} from '@xyflow/svelte';
     import { AggregationType } from './constants';
@@ -9,7 +13,7 @@
     const { aggregationType, column } = data;
 </script>
 
-<NodeWrapper label="Aggregate {column}">
+<NodeWrapper label="Aggregate {column}" {icon}>
 <Handle type="target" position={Position.Left} {isConnectable}/>
 <select id="aggregationType" value={$aggregationType} on:input={(event) => {$aggregationType = event.currentTarget.value;}}>
     {#each Object.values(AggregationType) as type}

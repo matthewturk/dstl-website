@@ -1,3 +1,7 @@
+<script lang="ts" context="module">
+	import { ArrowsUpDown } from '@steeze-ui/heroicons';
+	export const icon = ArrowsUpDown;
+</script>
 <script lang="ts">
 	import {
 		Handle,
@@ -49,7 +53,7 @@
 	}
 </script>
 
-<NodeWrapper label="Sort">
+<NodeWrapper {icon} label="Sort">
 	<Handle type="target" position={Position.Left} {isConnectable} />
 	<select
 		id="sortColumn"

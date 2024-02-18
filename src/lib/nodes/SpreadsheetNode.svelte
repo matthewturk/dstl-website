@@ -1,3 +1,7 @@
+<script lang="ts" context="module">
+	import { TableCells } from '@steeze-ui/heroicons';
+	export const icon = TableCells;
+</script>
 <script lang="ts">
 	import {
 		Handle,
@@ -35,7 +39,7 @@
 
 </script>
 
-<NodeWrapper label="Spreadsheet" resizable={true}>
+<NodeWrapper label="Spreadsheet" resizable={true} {icon}>
 <Datatable {handler}>
 	<table>
 		<thead>

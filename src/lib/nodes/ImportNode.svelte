@@ -1,3 +1,7 @@
+<script lang="ts" context="module">
+	import { GlobeAlt } from '@steeze-ui/heroicons';
+	export const icon = GlobeAlt;
+</script>
 <script lang="ts">
 	import { Handle, Position, type NodeProps } from '@xyflow/svelte';
 	import NodeWrapper from './NodeWrapper.svelte';
@@ -8,7 +12,7 @@
 	const { url, format } = data;
 </script>
 
-<NodeWrapper label="Import Data">
+<NodeWrapper {icon} label="Import Data">
 	<input type="text" id="url" value={$url} />
 	<select
 		id="format"

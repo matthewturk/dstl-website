@@ -1,3 +1,7 @@
+<script lang="ts" context="module">
+	import { ArrowDownTray } from '@steeze-ui/heroicons';
+	export const icon = ArrowDownTray;
+</script>
 <script lang="ts">
 	import { Handle, Position, type NodeProps, useSvelteFlow} from '@xyflow/svelte';
 	import { FileButton } from '@skeletonlabs/skeleton';
@@ -35,7 +39,7 @@
 	}
 </script>
 
-<NodeWrapper label="Upload">
+<NodeWrapper {icon} label="Upload">
 	<FileButton name="file" multiple="false" bind:files on:change={parseFile} />
 	<Handle type="source" position={Position.Right} {isConnectable} />
 </NodeWrapper>

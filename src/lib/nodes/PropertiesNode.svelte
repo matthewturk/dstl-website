@@ -1,9 +1,12 @@
+<script lang="ts" context="module">
+	import { InformationCircle } from '@steeze-ui/heroicons';
+	export const icon = InformationCircle;
+</script>
 <script lang="ts">
 	import {
 		Handle,
 		Position,
 		type NodeProps,
-		NodeToolbar,
 		useNodesData,
 		useSvelteFlow,
 		useHandleConnections
@@ -29,7 +32,7 @@
 	}
 </script>
 
-<NodeWrapper label="Properties">
+<NodeWrapper {icon} label="Properties">
  <ul>
 	{#each columns as column}
 		<li>{column}</li>

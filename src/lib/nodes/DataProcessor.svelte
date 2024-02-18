@@ -13,39 +13,38 @@
 	} from '@xyflow/svelte';
 
 	import SortNode from './SortNode.svelte';
+	import { icon as SortIcon } from './SortNode.svelte';
 	import AggregateNode from './AggregateNode.svelte';
+	import {icon as AggregateIcon} from './AggregateNode.svelte';
 	import ImportNode from './ImportNode.svelte';
+	import { icon as ImportIcon } from './ImportNode.svelte';
 	import UploadFileNode from './UploadFileNode.svelte';
+	import { icon  as UploadFileIcon } from './UploadFileNode.svelte';
 	import PropertiesNode from './PropertiesNode.svelte';
+	import { icon as PropertiesIcon } from './PropertiesNode.svelte';
 	import GraphWrapperNode from './GraphWrapperNode.svelte';
-	import ContextMenu from './ContextMenu.svelte';
+	import { icon as GraphWrapperIcon } from './GraphWrapperNode.svelte';
 	import SpreadsheetNode from './SpreadsheetNode.svelte';
-	import {
-		ArrowDownTray,
-		ArrowRightEndOnRectangle,
-		ArrowsUpDown,
-		ChartBarSquare,
-		GlobeAlt,
-		InformationCircle,
-		TableCells
-	} from '@steeze-ui/heroicons';
-	const nodeTypeInfo = {
-		sortNode: { component: SortNode, icon: ArrowsUpDown },
-		aggregateNode: { component: AggregateNode, icon: ArrowRightEndOnRectangle },
-		importNode: { component: ImportNode, icon: GlobeAlt },
-		uploadNode: { component: UploadFileNode, icon: ArrowDownTray },
-		propertiesNode: { component: PropertiesNode, icon: InformationCircle },
-		graphWrapperNode: { component: GraphWrapperNode, icon: ChartBarSquare },
-		spreadsheetNode: { component: SpreadsheetNode, icon: TableCells }
+	import { icon as SpreadsheetIcon } from './SpreadsheetNode.svelte';
+	import ContextMenu from './ContextMenu.svelte';
+
+	const nodeTypes: NodeTypes = {
+		sortNode: SortNode,
+		aggregateNode:  AggregateNode, 
+		importNode:  ImportNode,
+		uploadNode:  UploadFileNode,
+		propertiesNode: PropertiesNode,
+		graphWrapperNode: GraphWrapperNode,
+		spreadsheetNode:  SpreadsheetNode
 	};
-	let nodeTypes: NodeTypes = {};
-	$: {
-		nodeTypes = Object.fromEntries(
-			Object.entries(nodeTypeInfo).map(([type, { icon, component }]) => [
-				type,
-				component
-			])
-		);
+	const nodeIcons = {
+		sortNode: SortIcon,
+		aggregateNode: AggregateIcon,
+		importNode: ImportIcon,
+		uploadNode: UploadFileIcon,
+		propertiesNode: PropertiesIcon,
+		graphWrapperNode: GraphWrapperIcon,
+		spreadsheetNode: SpreadsheetIcon
 	}
 	
 	const nodes = writable<Node[]>([
@@ -140,7 +139,8 @@
 			<Background />
 			{#if menu}
 				<ContextMenu
-					{nodeTypeInfo}
+					{nodeTypes}
+					{nodeIcons}
 					onClick={handlePaneClick}
 					top={menu.top}
 					left={menu.left}

@@ -1,15 +1,10 @@
 <script lang="ts">
-	import { useNodes, type NodeTypes, type NodeProps } from '@xyflow/svelte';
-	import { Icon, type IconSource } from '@steeze-ui/svelte-icon';
-	import type { ComponentType, SvelteComponent } from 'svelte';
-	interface INodeTypeInfo {
-		[key: string]: {
-			component: ComponentType<SvelteComponent<NodeProps, any, any>>;
-			icon: IconSource;
-		};
-	}
+	import { useNodes, type NodeTypes} from '@xyflow/svelte';
+	import { Icon, type IconSource} from '@steeze-ui/svelte-icon';
+  import { ChevronRight } from '@steeze-ui/heroicons';
 
-	export let nodeTypeInfo: INodeTypeInfo = {};
+	export let nodeTypes: NodeTypes = {};
+  export let nodeIcons: { [key: string]: IconSource } = {};
 	export let onClick: (e: MouseEvent) => void;
 	export let left: number | undefined;
 	export let top: number | undefined;
@@ -33,12 +28,12 @@
 
 <div
 	style="top: {top}px; left: {left}px; right: {right}px; bottom: {bottom}px;"
-	class="absolute z-10 btn-group-vertical text-left variant-filled-tertiary context-menu"
+	class="absolute z-10 variant-filled-tertiary context-menu btn-group-vertical"
 	on:click={onClick}
 >
-	{#each Object.entries(nodeTypeInfo) as [nodeType, { icon }]}
-		<button class="text-left" on:click={addNode(nodeType)}
-			><span><Icon src={icon} size="32" /></span>
+	{#each Object.entries(nodeTypes) as [nodeType, nodeComponent]}
+		<button on:click={addNode(nodeType)}
+			><span><Icon src={nodeIcons[nodeType] || ChevronRight} size="32" /></span>
 			<span>Add {nodeType.slice(0, -4) || ''}</span>
 		</button>
 	{/each}
@@ -49,4 +44,8 @@
 	.context-menu button:hover {
 		@apply bg-tertiary-700;
 	}
+
+  .btn-group-vertical > button {
+    @apply justify-start;
+  }
 </style>
