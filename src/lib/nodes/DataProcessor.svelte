@@ -9,7 +9,8 @@
 		Controls,
 		MiniMap,
 		type Node,
-		type NodeTypes
+		type NodeTypes,
+		type Edge
 	} from '@xyflow/svelte';
 
 	import SortNode from './SortNode.svelte';
@@ -96,7 +97,7 @@
 		}
 	]);
 
-	const initialEdges = []; //{ id: 'e1', source: '1', target: '2' }];
+	const initialEdges: Edge[] = [];
 
 	const edges = writable(initialEdges);
 

@@ -5,7 +5,7 @@
 
 	export let nodeTypes: NodeTypes = {};
   export let nodeIcons: { [key: string]: IconSource } = {};
-	export let onClick: (e: MouseEvent) => void;
+	export let onClick: (e: MouseEvent | KeyboardEvent) => void;
 	export let left: number | undefined;
 	export let top: number | undefined;
 	export let right: number | undefined;
@@ -29,10 +29,10 @@
 <div
 	style="top: {top}px; left: {left}px; right: {right}px; bottom: {bottom}px;"
 	class="absolute z-10 variant-filled-tertiary context-menu btn-group-vertical"
-	on:click={onClick}
+	on:click={onClick} on:keydown={onClick} role="menu" tabindex=-1
 >
 	{#each Object.entries(nodeTypes) as [nodeType, nodeComponent]}
-		<button on:click={addNode(nodeType)}
+		<button type="button" on:click={addNode(nodeType)}
 			><span><Icon src={nodeIcons[nodeType] || ChevronRight} size="32" /></span>
 			<span>Add {nodeType.slice(0, -4) || ''}</span>
 		</button>
