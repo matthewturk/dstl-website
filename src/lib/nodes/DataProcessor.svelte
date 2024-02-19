@@ -27,6 +27,9 @@
 	import { icon as GraphWrapperIcon } from './GraphWrapperNode.svelte';
 	import SpreadsheetNode from './SpreadsheetNode.svelte';
 	import { icon as SpreadsheetIcon } from './SpreadsheetNode.svelte';
+	import PythonNode from './PythonNode.svelte';
+	import {icon as PythonIcon} from './PythonNode.svelte';
+
 	import ContextMenu from './ContextMenu.svelte';
 
 	const nodeTypes: NodeTypes = {
@@ -36,7 +39,8 @@
 		uploadNode: UploadFileNode,
 		propertiesNode: PropertiesNode,
 		graphWrapperNode: GraphWrapperNode,
-		spreadsheetNode: SpreadsheetNode
+		spreadsheetNode: SpreadsheetNode,
+		pythonNode: PythonNode
 	};
 	const nodeIcons = {
 		sortNode: SortIcon,
@@ -45,7 +49,8 @@
 		uploadNode: UploadFileIcon,
 		propertiesNode: PropertiesIcon,
 		graphWrapperNode: GraphWrapperIcon,
-		spreadsheetNode: SpreadsheetIcon
+		spreadsheetNode: SpreadsheetIcon,
+		pythonNode: PythonIcon
 	};
 
 	const nodes = writable<Node[]>([
