@@ -36,8 +36,10 @@
 	$: nodeData = useNodesData($connections[0]?.source);
 
 	$: {
-		columns = $nodeData?.columns || [];
+		columns = $nodeData?.columns;
+		if (!columns.map) { columns = []; }
 		values = $nodeData?.values || [];
+		if (!values.map) { values = []; }
 	}
 </script>
 
@@ -47,6 +49,5 @@
 		<li>{column}</li>
 	{/each}
 </ul>
-<p>{Object.values(values[0] || {})}</p>
 	<Handle type="target" position={Position.Left} {isConnectable} />
 </NodeWrapper>

@@ -49,5 +49,6 @@
 
 <NodeWrapper {icon} label="Upload">
 	<FileButton name="file" multiple="false" bind:files on:change={parseFile} />
+	<label for="file">{(files || [{'name':''}])[0].name}</label>
 	<Handle type="source" position={Position.Right} {isConnectable} />
 </NodeWrapper>
