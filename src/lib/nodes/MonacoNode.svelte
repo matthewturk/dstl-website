@@ -69,16 +69,14 @@
 <NodeWrapper label="Editor" {icon} resizable={true}>
 	<Handle type="target" position={Position.Left} {isConnectable} />
 	<Handle type="source" position={Position.Right} {isConnectable} />
-	<div class="flex flex-col w-full">
-		<select class="flex-none">
+	<div class="flex flex-col h-full w-full">
+		<select class="flex-none w-auto p-2 m-2">
 			<option value="javascript">javascript</option>
 			<option value="python">python</option>
 			<option value="json">json</option>
 		</select>
-		<div class="container flex-auto shrink" bind:this={editorContainer} />
+		<div class="flex-1 min-w-0 min-h-0 p-2 m-2">
+			<div style="width: 100%; height: 100%;" bind:this={editorContainer} />
+		</div>
 	</div>
 </NodeWrapper>
-
-<style>
-    .monaco-editor { position: absolute !important; }
-</style>
