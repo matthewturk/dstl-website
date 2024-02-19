@@ -42,7 +42,6 @@
 	const handler = new DataHandler([{}], { rowsPerPage: 10 });
 	const rows = handler.getRows();
 
-	const { updateNodeData } = useSvelteFlow();
 	const connections = useHandleConnections({
 		nodeId: id,
 		type: 'target'
