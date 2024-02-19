@@ -62,13 +62,13 @@
 		{
 			id: Math.random().toString(36).substring(7),
 			type: 'propertiesNode',
-			position: { x: 300, y: 100 },
+			position: { x: 300, y: 0 },
 			data: {}
 		},
 		{
 			id: Math.random().toString(36).substring(7),
 			type: 'spreadsheetNode',
-			position: { x: 350, y: 100 },
+			position: { x: 450, y: 100 },
 			data: { columns: [], values: [{}]}
 		}
 	]);
