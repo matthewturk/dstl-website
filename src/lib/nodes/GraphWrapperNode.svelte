@@ -1,3 +1,7 @@
+<script lang="ts" context="module">
+	import { ChartBarSquare } from '@steeze-ui/heroicons';
+	export const icon = ChartBarSquare;
+</script>
 <script lang="ts">
 	import {
 		Handle,
@@ -14,10 +18,19 @@
 	import 'chart.js/auto';
 	import type { ChartData, ChartDataset } from 'chart.js';
 	import NodeWrapper from './NodeWrapper.svelte';
-	type $$Props = NodeProps;
-	export let data: $$Props['data'];
-	export let id: $$Props['id'];
-	export let isConnectable: $$Props['isConnectable'];
+    type $$Props = NodeProps;
+    export let id: $$Props['id']; id;
+    export let data: $$Props['data']; data;
+    export let dragHandle: $$Props['dragHandle'] = undefined; dragHandle;
+    export let type: $$Props['type']  = undefined; type;
+    export let selected: $$Props['selected'] = undefined; selected;
+    export let isConnectable: $$Props['isConnectable'] = undefined; isConnectable;
+    export let zIndex: $$Props['zIndex'] = undefined; zIndex;
+    export let width: $$Props['width'] = undefined; width;
+    export let height: $$Props['height'] = undefined; height;
+    export let dragging: $$Props['dragging']; dragging;
+    export let targetPosition: $$Props['targetPosition'] = undefined; targetPosition;
+    export let sourcePosition: $$Props['sourcePosition'] = undefined; sourcePosition;
 	let files: FileList;
 	let xColumn = '';
 	let yColumn = '';
@@ -46,7 +59,7 @@
 	}
 </script>
 
-<NodeWrapper label="Graph" resizable={true}>
+<NodeWrapper {icon} label="Graph" resizable={true}>
 	<Handle type="target" position={Position.Left} {isConnectable} />
 	<div class="flex flex-col">
 		<div class="p-2 m-2">

@@ -1,15 +1,27 @@
+<script lang="ts" context="module">
+	import { ArrowDownTray } from '@steeze-ui/heroicons';
+	export const icon = ArrowDownTray;
+</script>
 <script lang="ts">
 	import { Handle, Position, type NodeProps, useSvelteFlow} from '@xyflow/svelte';
 	import { FileButton } from '@skeletonlabs/skeleton';
 	import * as Papa from 'papaparse';
 	import NodeWrapper from './NodeWrapper.svelte';
-	type $$Props = NodeProps;
-	export let data: $$Props['data'];
-	export let id: $$Props['id'];
-	export let isConnectable: $$Props['isConnectable'];
+    type $$Props = NodeProps;
+    export let id: $$Props['id']; id;
+    export let data: $$Props['data']; data;
+    export let dragHandle: $$Props['dragHandle'] = undefined; dragHandle;
+    export let type: $$Props['type']  = undefined; type;
+    export let selected: $$Props['selected'] = undefined; selected;
+    export let isConnectable: $$Props['isConnectable'] = undefined; isConnectable;
+    export let zIndex: $$Props['zIndex'] = undefined; zIndex;
+    export let width: $$Props['width'] = undefined; width;
+    export let height: $$Props['height'] = undefined; height;
+    export let dragging: $$Props['dragging']; dragging;
+    export let targetPosition: $$Props['targetPosition'] = undefined; targetPosition;
+    export let sourcePosition: $$Props['sourcePosition'] = undefined; sourcePosition;
     const { updateNodeData } = useSvelteFlow();
 	let files: FileList;
-
 
 	const parseCSV = (file: File): Promise<Papa.ParseResult<any>> => {
 		return new Promise((resolve, reject) => {
@@ -35,7 +47,8 @@
 	}
 </script>
 
-<NodeWrapper label="Upload">
+<NodeWrapper {icon} label="Upload">
 	<FileButton name="file" multiple="false" bind:files on:change={parseFile} />
+	<label for="file">{(files || [{'name':''}])[0].name}</label>
 	<Handle type="source" position={Position.Right} {isConnectable} />
 </NodeWrapper>
