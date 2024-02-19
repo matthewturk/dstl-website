@@ -27,6 +27,8 @@
 	import { icon as GraphWrapperIcon } from './GraphWrapperNode.svelte';
 	import SpreadsheetNode from './SpreadsheetNode.svelte';
 	import { icon as SpreadsheetIcon } from './SpreadsheetNode.svelte';
+	import MonacoNode from './MonacoNode.svelte';
+	import { icon as MonacoIcon } from './MonacoNode.svelte';
 	import ContextMenu from './ContextMenu.svelte';
 
 	const nodeTypes: NodeTypes = {
@@ -36,7 +38,8 @@
 		uploadNode: UploadFileNode,
 		propertiesNode: PropertiesNode,
 		graphWrapperNode: GraphWrapperNode,
-		spreadsheetNode: SpreadsheetNode
+		spreadsheetNode: SpreadsheetNode,
+		monacoNode: MonacoNode
 	};
 	const nodeIcons = {
 		sortNode: SortIcon,
@@ -45,7 +48,8 @@
 		uploadNode: UploadFileIcon,
 		propertiesNode: PropertiesIcon,
 		graphWrapperNode: GraphWrapperIcon,
-		spreadsheetNode: SpreadsheetIcon
+		spreadsheetNode: SpreadsheetIcon,
+		monacoNode: MonacoIcon
 	};
 
 	const nodes = writable<Node[]>([
