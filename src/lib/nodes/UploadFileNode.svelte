@@ -23,7 +23,6 @@
     const { updateNodeData } = useSvelteFlow();
 	let files: FileList;
 
-
 	const parseCSV = (file: File): Promise<Papa.ParseResult<any>> => {
 		return new Promise((resolve, reject) => {
 			Papa.parse(file, {

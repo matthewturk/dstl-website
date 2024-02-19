@@ -11,7 +11,7 @@
 		useSvelteFlow,
 		useHandleConnections
 	} from '@xyflow/svelte';
-    import { DataHandler, Datatable, Th, ThFilter } from '@vincjo/datatables';
+    import { DataHandler, Datatable, Th, ThFilter, type Row, type Field } from '@vincjo/datatables';
 	import NodeWrapper from './NodeWrapper.svelte';
     type $$Props = NodeProps;
     export let id: $$Props['id']; id;
@@ -36,12 +36,15 @@
 	});
 
 	let columns: string[] = [];
+	let rowCols: Field<Row>[] = [];
 	let values: { [key: string]: any }[] = [];
 
 	$: nodeData = useNodesData($connections[0]?.source);
 
 	$: {
 		columns = $nodeData?.columns || [];
+		console.log(columns);
+		rowCols = columns.map((column) => column as Field<Row>);
 		values = $nodeData?.values || [];
         handler.setRows(values);
 	}
@@ -53,13 +56,13 @@
 	<table>
 		<thead>
 			<tr>
-				{#each columns as column}
-					<Th {handler} orderBy={column}>{column}</Th>
+				{#each rowCols as column}
+					<Th {handler} orderBy={(column)}>{column}</Th>
 				{/each}
 			</tr>
 			<tr>
-				{#each columns as column}
-					<ThFilter {handler} filterBy={column}/>
+				{#each rowCols as column}
+					<ThFilter {handler} filterBy={(column)}/>
 				{/each}
 			</tr>
 		</thead>

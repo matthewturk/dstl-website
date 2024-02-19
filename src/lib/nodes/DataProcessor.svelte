@@ -16,11 +16,11 @@
 	import SortNode from './SortNode.svelte';
 	import { icon as SortIcon } from './SortNode.svelte';
 	import AggregateNode from './AggregateNode.svelte';
-	import {icon as AggregateIcon} from './AggregateNode.svelte';
+	import { icon as AggregateIcon } from './AggregateNode.svelte';
 	import ImportNode from './ImportNode.svelte';
 	import { icon as ImportIcon } from './ImportNode.svelte';
 	import UploadFileNode from './UploadFileNode.svelte';
-	import { icon  as UploadFileIcon } from './UploadFileNode.svelte';
+	import { icon as UploadFileIcon } from './UploadFileNode.svelte';
 	import PropertiesNode from './PropertiesNode.svelte';
 	import { icon as PropertiesIcon } from './PropertiesNode.svelte';
 	import GraphWrapperNode from './GraphWrapperNode.svelte';
@@ -31,12 +31,12 @@
 
 	const nodeTypes: NodeTypes = {
 		sortNode: SortNode,
-		aggregateNode:  AggregateNode, 
-		importNode:  ImportNode,
-		uploadNode:  UploadFileNode,
+		aggregateNode: AggregateNode,
+		importNode: ImportNode,
+		uploadNode: UploadFileNode,
 		propertiesNode: PropertiesNode,
 		graphWrapperNode: GraphWrapperNode,
-		spreadsheetNode:  SpreadsheetNode
+		spreadsheetNode: SpreadsheetNode
 	};
 	const nodeIcons = {
 		sortNode: SortIcon,
@@ -46,58 +46,33 @@
 		propertiesNode: PropertiesIcon,
 		graphWrapperNode: GraphWrapperIcon,
 		spreadsheetNode: SpreadsheetIcon
-	}
-	
+	};
+
 	const nodes = writable<Node[]>([
 		{
-			id: '1',
-			type: 'sortNode',
-			position: { x: 100, y: 100 },
-			data: { sortOrder: writable('ascending'), sortColumn: writable('') }
-		},
-		{
-			id: '2',
-			type: 'aggregateNode',
-			position: { x: 200, y: 200 },
-			data: {
-				type: writable('sum'),
-				column: writable('column1'),
-				columns: writable(['column1', 'column2'])
-			}
-		},
-		{
-			id: '3',
-			type: 'importNode',
-			position: { x: 100, y: 200 },
-			data: { url: writable('https://example.com/data.csv'), format: writable('csv') }
-		},
-		{
-			id: '4',
+			id: Math.random().toString(36).substring(7),
 			type: 'uploadNode',
 			position: { x: 200, y: 100 },
-			data: { values: writable([]), columns: writable([]) }
+			data: { values: writable([{}]), columns: writable([]) }
 		},
 		{
-			id: '5',
+			id: Math.random().toString(36).substring(7),
 			type: 'propertiesNode',
 			position: { x: 300, y: 100 },
 			data: {}
 		},
 		{
-			id: '6',
-			type: 'propertiesNode',
+			id: Math.random().toString(36).substring(7),
+			type: 'spreadsheetNode',
 			position: { x: 350, y: 100 },
-			data: {}
-		},
-		{
-			id: '7',
-			type: 'graphWrapperNode',
-			position: { x: 400, y: 100 },
-			data: {}
+			data: { columns: [], values: [{}]}
 		}
 	]);
 
-	const initialEdges: Edge[] = [];
+	const initialEdges: Edge[] = [
+		{ id: Math.random().toString(36).substring(7), source: $nodes[0].id, target: $nodes[1].id },
+		{ id: Math.random().toString(36).substring(7), source: $nodes[0].id, target: $nodes[2].id }
+	];
 
 	const edges = writable(initialEdges);
 
