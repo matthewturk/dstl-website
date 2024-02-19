@@ -46,14 +46,20 @@
 	});
 	$: nodeData = useNodesData($connections[0]?.source);
 	let script = '';
+	let running = false;
 	async function executeScript() {
 		if (!$pyodide) {
 			//@ts-ignore
 			$pyodide = await loadPyodide({ indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.0/full/' });
 			await $pyodide.loadPackage('pandas');
 		}
-		const result = await $pyodide.runPythonAsync(script);
-		console.log(result);
+		running = true;
+		console.log('Running');
+        // Even using promises this blocks.  Let's figure that out!
+		$pyodide.runPythonAsync(script).then((result) => {
+			console.log('Finished', result);
+			running = false;
+		});
 	}
 </script>
 
@@ -63,9 +69,16 @@
 			<button type="button" class="btn variant-filled w-16 p-1 m-1" on:click={executeScript}
 				>Run</button
 			>
-			<button type="button" class="btn variant-filled w-16 p-1 m-1" on:click={() => {script = ""}}
-				>Clear</button
+			<button
+				type="button"
+				class="btn variant-filled w-16 p-1 m-1"
+				on:click={() => {
+					script = '';
+				}}>Clear</button
 			>
+			{#if running}
+				<span>Running...</span>
+			{/if}
 		</div>
 		<Handle type="target" position={Position.Left} {isConnectable} />
 		<Handle type="source" position={Position.Right} {isConnectable} />
