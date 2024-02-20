@@ -44,10 +44,12 @@
 </script>
 
 <NodeWrapper {icon} label="Properties">
+	<div class="max-h-32 overflow-y-auto max-w-2/3 overflow-x-auto">
  <ul>
 	{#each columns as column}
 		<li>{column}</li>
 	{/each}
 </ul>
+</div>
 	<Handle type="target" position={Position.Left} {isConnectable} />
 </NodeWrapper>

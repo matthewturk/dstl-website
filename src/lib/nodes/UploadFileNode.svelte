@@ -48,7 +48,10 @@
 </script>
 
 <NodeWrapper {icon} label="Upload">
+	<div class="flex-row">
+	<label for="file" class="p-2 font-semibold text-xl">{(files || [{'name':''}])[0].name}</label>
 	<FileButton name="file" multiple="false" bind:files on:change={parseFile} />
-	<label for="file">{(files || [{'name':''}])[0].name}</label>
-	<Handle type="source" position={Position.Right} {isConnectable} />
+	</div>
+<Handle type="source" position={Position.Right} {isConnectable} />
+
 </NodeWrapper>

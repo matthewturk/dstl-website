@@ -106,7 +106,7 @@
 	}
 </script>
 
-<div class="w-full h-full" bind:clientWidth={width} bind:clientHeight={height}>
+<div class="w-full h-full m-2 p-2" bind:clientWidth={width} bind:clientHeight={height}>
 	<SvelteFlowProvider>
 		<SvelteFlow
 			{nodes}

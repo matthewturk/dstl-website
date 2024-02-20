@@ -70,30 +70,32 @@
 </script>
 
 <NodeWrapper label="Spreadsheet" resizable={true} {icon}>
-	<Datatable {handler}>
-		<table>
-			<thead>
-				<tr>
-					{#each rowCols as column}
-						<Th {handler} orderBy={column}>{column}</Th>
-					{/each}
-				</tr>
-				<tr>
-					{#each rowCols as column}
-						<ThFilter {handler} filterBy={column} />
-					{/each}
-				</tr>
-			</thead>
-			<tbody>
-				{#each $rows as row}
+	<div class="max-w-full overflow-x-auto">
+		<Datatable {handler}>
+			<table>
+				<thead>
 					<tr>
-						{#each columns as column}
-							<td>{row[column]}</td>
+						{#each rowCols as column}
+							<Th {handler} orderBy={column}>{column}</Th>
 						{/each}
 					</tr>
-				{/each}
-			</tbody>
-		</table>
-	</Datatable>
+					<tr>
+						{#each rowCols as column}
+							<ThFilter {handler} filterBy={column} />
+						{/each}
+					</tr>
+				</thead>
+				<tbody>
+					{#each $rows as row}
+						<tr>
+							{#each columns as column}
+								<td>{row[column]}</td>
+							{/each}
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</Datatable>
+	</div>
 	<Handle type="target" position={Position.Left} {isConnectable} />
 </NodeWrapper>
