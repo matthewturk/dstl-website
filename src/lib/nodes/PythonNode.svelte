@@ -4,6 +4,8 @@
 </script>
 
 <script lang="ts">
+	import { tick } from 'svelte';
+	import { writable } from 'svelte/store';
 	import {
 		Handle,
 		Position,
@@ -45,21 +47,36 @@
 		type: 'target'
 	});
 	$: nodeData = useNodesData($connections[0]?.source);
+
+	$: {
+		if ($nodeData && $nodeData.script) {
+			script = $nodeData.script;
+		}
+	}
 	let script = '';
+	const output = writable<string>('');
 	let running = false;
 	async function executeScript() {
 		if (!$pyodide) {
 			//@ts-ignore
+			running = true;
 			$pyodide = await loadPyodide({ indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.0/full/' });
 			await $pyodide.loadPackage('pandas');
+			$pyodide.setStdout({batched: async (text: string) => {
+				console.log("stdout: ", text);
+				output.set($output + text + "\n");
+				await tick();
+			}});
+			$pyodide.setStderr({batched: async (text: string) => {
+				console.log("stderr: ", text);
+				output.set($output + text + "\n");
+				await tick(); // doesn't seem to actually work for me!
+			}});
 		}
 		running = true;
-		console.log('Running');
-        // Even using promises this blocks.  Let's figure that out!
-		$pyodide.runPythonAsync(script).then((result) => {
-			console.log('Finished', result);
-			running = false;
-		});
+		await $pyodide.loadPackagesFromImports(script);
+		await $pyodide.runPythonAsync(script);
+		running = false;
 	}
 </script>
 
@@ -88,5 +105,12 @@
 			bind:value={script}
 			placeholder="Enter your Python script"
 		/>
+		<textarea
+			bind:value={$output}
+			class="textarea m-1 p-1 font-mono"
+			rows="9"
+			placeholder="Output"
+			readonly
+			/>
 	</div>
 </NodeWrapper>
