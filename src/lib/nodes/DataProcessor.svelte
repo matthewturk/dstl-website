@@ -27,9 +27,10 @@
 	import { icon as GraphWrapperIcon } from './GraphWrapperNode.svelte';
 	import SpreadsheetNode from './SpreadsheetNode.svelte';
 	import { icon as SpreadsheetIcon } from './SpreadsheetNode.svelte';
+	import MonacoNode from './MonacoNode.svelte';
+	import { icon as MonacoIcon } from './MonacoNode.svelte';
 	import PythonNode from './PythonNode.svelte';
 	import {icon as PythonIcon} from './PythonNode.svelte';
-
 	import ContextMenu from './ContextMenu.svelte';
 
 	const nodeTypes: NodeTypes = {
@@ -40,6 +41,7 @@
 		propertiesNode: PropertiesNode,
 		graphWrapperNode: GraphWrapperNode,
 		spreadsheetNode: SpreadsheetNode,
+		monacoNode: MonacoNode,
 		pythonNode: PythonNode
 	};
 	const nodeIcons = {
@@ -50,6 +52,7 @@
 		propertiesNode: PropertiesIcon,
 		graphWrapperNode: GraphWrapperIcon,
 		spreadsheetNode: SpreadsheetIcon,
+		monacoNode: MonacoIcon,
 		pythonNode: PythonIcon
 	};
 
@@ -63,13 +66,13 @@
 		{
 			id: Math.random().toString(36).substring(7),
 			type: 'propertiesNode',
-			position: { x: 300, y: 100 },
+			position: { x: 300, y: 0 },
 			data: {}
 		},
 		{
 			id: Math.random().toString(36).substring(7),
 			type: 'spreadsheetNode',
-			position: { x: 350, y: 100 },
+			position: { x: 450, y: 100 },
 			data: { columns: [], values: [{}]}
 		}
 	]);
