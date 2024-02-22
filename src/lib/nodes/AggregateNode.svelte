@@ -32,7 +32,6 @@
 	targetPosition;
 	export let sourcePosition: $$Props['sourcePosition'] = undefined;
 	sourcePosition;
-	//export let columns: $$Props['columns'];
 	const { aggregationType, column } = data;
 </script>
 

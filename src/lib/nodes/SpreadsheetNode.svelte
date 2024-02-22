@@ -14,6 +14,7 @@
 	} from '@xyflow/svelte';
 	import { DataHandler, Datatable, Th, ThFilter, type Row, type Field } from '@vincjo/datatables';
 	import NodeWrapper from './NodeWrapper.svelte';
+	import type * as aq from 'arquero';
 	type $$Props = NodeProps;
 	export let id: $$Props['id'];
 	id;
@@ -41,32 +42,29 @@
 	sourcePosition;
 	const handler = new DataHandler([{}], { rowsPerPage: 10 });
 	const rows = handler.getRows();
+	let columns: string[] = [];
 
 	const connections = useHandleConnections({
 		nodeId: id,
 		type: 'target'
 	});
 
-	let columns: string[];
 	let rowCols: Field<Row>[];
-	let values: { [key: string]: any }[];
+	let table: aq.internal.ColumnTable;
 
 	$: nodeData = useNodesData($connections[0]?.source);
 
 	$: {
-		columns = $nodeData?.columns || [];
-		if (columns.map) {
-			rowCols = columns.map((column) => column as Field<Row>);
-		} else {
+		table = $nodeData?.table;
+		if (!table) {
 			rowCols = [];
-		}
-		values = $nodeData?.values || [];
-		if (values.map) {
-			handler.setRows(values);
+			handler.setRows([{}]);
 		} else {
-			handler.setRows([]);
+			rowCols = table?.columnNames().map((column) => column as Field<Row>);
+			handler.setRows(table?.objects());
 		}
 	}
+
 </script>
 
 <NodeWrapper label="Spreadsheet" resizable={true} {icon}>
@@ -86,9 +84,9 @@
 					</tr>
 				</thead>
 				<tbody>
-					{#each $rows as row}
+					{#each ($rows || []) as row}
 						<tr>
-							{#each columns as column}
+							{#each rowCols as column}
 								<td>{row[column]}</td>
 							{/each}
 						</tr>
