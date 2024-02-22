@@ -119,7 +119,7 @@
 		>
 			<MiniMap class="bg-surface-900" zoomable pannable height={120} />
 			<Controls />
-			<Background class="bg-surface-500" gap={16} />
+			<Background class="bg-surface-300" gap={16} />
 			<Background />
 			{#if menu}
 				<ContextMenu

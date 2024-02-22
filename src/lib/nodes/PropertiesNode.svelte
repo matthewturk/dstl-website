@@ -1,16 +1,17 @@
 <script lang="ts" context="module">
-	import { InformationCircle } from '@steeze-ui/heroicons';
+	import { ArrowUpOnSquare, InformationCircle } from '@steeze-ui/heroicons';
 	export const icon = InformationCircle;
 </script>
+
 <script lang="ts">
 	import {
 		Handle,
 		Position,
 		type NodeProps,
 		useNodesData,
-		useSvelteFlow,
 		useHandleConnections
 	} from '@xyflow/svelte';
+	import { Table, type TableSource, tableMapperValues} from '@skeletonlabs/skeleton';
 	import * as aq from 'arquero';
 	import NodeWrapper from './NodeWrapper.svelte';
 	type $$Props = NodeProps;
@@ -38,7 +39,16 @@
 	targetPosition;
 	export let sourcePosition: $$Props['sourcePosition'] = undefined;
 	sourcePosition;
-	const { updateNodeData } = useSvelteFlow();
+	interface IColumnStats {
+		column: string;
+		min: number;
+		max: number;
+		mean: number;
+		count: number;
+		numUnique: number;
+	}
+	let statistics: IColumnStats[] = [];
+	let propertiesTable: TableSource = { head: [], body: [] };
 	const connections = useHandleConnections({
 		nodeId: id,
 		type: 'target'
@@ -56,15 +66,35 @@
 			columns = [];
 		}
 	}
+
+	$: {
+		if (table) {
+			columns.forEach((c) => {
+				statistics.push({
+					column: c,
+					...table
+						.rollup({
+							min: aq.op.min(c),
+							max: aq.op.max(c),
+							mean: aq.op.mean(c),
+							count: aq.op.count(),
+							numUnique: aq.op.distinct(c)
+						})
+						.objects()[0]
+				} as IColumnStats);
+			});
+			propertiesTable = {
+				head: ['Column', 'Min', 'Max', 'Mean', 'Count', 'Num Unique'],
+				body: tableMapperValues(statistics, ['column', 'min', 'max', 'mean', 'count', 'numUnique']),
+			};
+		}
+	}
+
 </script>
 
 <NodeWrapper {icon} label="Properties">
-	<div class="max-h-32 overflow-y-auto max-w-2/3 overflow-x-auto">
-		<table>
-			{#each columns as column}
-				<tr><td>{column}</td></tr>
-			{/each}
-		</table>
+	<div class="max-h-72 overflow-y-auto max-w-2/3 overflow-x-auto">
+		<Table source={propertiesTable} interactive={true}/>
 	</div>
 	<Handle type="target" position={Position.Left} {isConnectable} />
 </NodeWrapper>

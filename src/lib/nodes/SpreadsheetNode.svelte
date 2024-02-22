@@ -68,9 +68,9 @@
 </script>
 
 <NodeWrapper label="Spreadsheet" resizable={true} {icon}>
-	<div class="max-w-full overflow-x-auto">
+	<div class="max-w-full overflow-x-auto space-y-2 table-container">
 		<Datatable {handler}>
-			<table>
+			<table class="table table-hover table-compact table-auto w-full">
 				<thead>
 					<tr>
 						{#each rowCols as column}
