@@ -21,7 +21,6 @@
 	</NodeToolbar>
 {/if}
 
-
 <div
 	class="flex flex-col border w-full border-solid border-gray-200 h-full rounded-2xl bg-white/70 shadow-[0_7px_9px_0_rgba(0,0,0,0.02)]"
 >
