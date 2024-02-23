@@ -112,7 +112,7 @@
 			{nodes}
 			{edges}
 			{nodeTypes}
-			fitView
+			
 			on:panecontextmenu={handleContextMenu}
 			on:paneclick={handlePaneClick}
 			class="bg-surface-500/5"

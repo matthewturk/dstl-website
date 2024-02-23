@@ -12,6 +12,8 @@
 		useHandleConnections,
 		useSvelteFlow
 	} from '@xyflow/svelte';
+	import { Icon } from '@steeze-ui/svelte-icon';
+	import { CheckCircle, XCircle } from '@steeze-ui/heroicons';
 	import { AggregationType } from './constants';
 	import * as aq from 'arquero';
 	import NodeWrapper from './NodeWrapper.svelte';
@@ -62,13 +64,20 @@
 		[AggregationType.Quantile]: aq.op.quantile
 	};
 
-	function processData(event) {
+	let selectedColumns: Record<string, boolean> = {};
+
+	function processData(event: Event) {
 		console.log('Processing data');
 		if (opMap[aggregationType] === undefined) {
 			console.log('Invalid aggregation type');
 			return;
 		}
-		const rollUps = Object.fromEntries(table.columnNames().map((col) => [col, opMap[aggregationType](col)]));
+		const rollUps = Object.fromEntries(
+			table
+				.columnNames()
+				.filter((col) => selectedColumns[col])
+				.map((col) => [col, opMap[aggregationType](col)])
+		);
 		delete rollUps[column];
 		const v = table.groupby(column).rollup(rollUps);
 		updateNodeData(id, { table: v });
@@ -76,28 +85,69 @@
 
 	$: nodeData = useNodesData($connections[0]?.source);
 	$: table = $nodeData?.table;
+	$: {
+		if (table) {
+			selectedColumns = table.columnNames().reduce((acc, col) => {
+				acc[col] = false;
+				return acc;
+			}, {});
+		}
+	}
+
+	function toggleColumn(column: string): void {
+		selectedColumns[column] = !selectedColumns[column];
+	}
 </script>
 
-<NodeWrapper label="Aggregate {column || ''}" {icon}>
+<NodeWrapper label="Group and Aggregate {column || ''}" {icon}>
 	<Handle type="target" position={Position.Left} {isConnectable} />
-	<select id="column" bind:value={column}>
-		{#if table}
-			{#each $nodeData?.table?.columnNames() as col, index}
-				<option value={col}>{col}</option>
+	<div class="grid grid-cols-2 align-middle items-center gap-2">
+		<div>
+			<label for="column">Group By</label>
+		</div>
+		<div>
+			<select id="column" bind:value={column}>
+				{#if table}
+					{#each $nodeData?.table?.columnNames() as col, index}
+						<option value={col}>{col}</option>
+					{/each}
+				{/if}
+			</select>
+		</div>
+		<div>
+			<label for="aggregationType">Operation</label>
+		</div>
+		<div>
+			<select
+				id="aggregationType"
+				bind:value={aggregationType}
+				on:input={(event) => {
+					aggregationType = event.currentTarget.value;
+				}}
+			>
+				{#each Object.values(AggregationType) as type}
+					<option value={type}>{type}</option>
+				{/each}
+			</select>
+		</div>
+		<div class="col-span-2 max-w-xl">
+			{#each Object.keys(selectedColumns) as f}
+				<button
+					class="m-1 chip {selectedColumns[f] ? 'variant-filled' : 'variant-soft'}"
+					on:click={() => {
+						toggleColumn(f);
+					}}
+					on:keypress
+				>
+					<span><Icon src={selectedColumns[f] ? CheckCircle : XCircle} size="1rem" /></span><span
+						>{f}</span
+					>
+				</button>
 			{/each}
-		{/if}
-	</select>
-	<select
-		id="aggregationType"
-		bind:value={aggregationType}
-		on:input={(event) => {
-			aggregationType = event.currentTarget.value;
-		}}
-	>
-		{#each Object.values(AggregationType) as type}
-			<option value={type}>{type}</option>
-		{/each}
-	</select>
-	<button type="button" class="btn variant-filled" on:click={processData}>Process</button>
+		</div>
+		<div class="col-span-2 items-center text-center mt-2">
+			<button type="button" class="btn variant-filled" on:click={processData}>Process</button>
+		</div>
+	</div>
 	<Handle type="source" position={Position.Right} {isConnectable} />
 </NodeWrapper>

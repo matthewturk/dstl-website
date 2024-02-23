@@ -7,13 +7,11 @@
 		Handle,
 		Position,
 		type NodeProps,
-		useSvelteFlow,
-		NodeResizer,
 		useHandleConnections,
 		useNodesData
 	} from '@xyflow/svelte';
-	import { FileButton } from '@skeletonlabs/skeleton';
 	import { Line, Scatter, Bar } from 'svelte-chartjs';
+	import * as aq from 'arquero';
 	//import { Chart as ChartJS, Title, Tooltip, Legend, LineElement, LinearScale, PointElement, CategoryScale } from 'chart.js';
 	import 'chart.js/auto';
 	import type { ChartData, ChartDataset } from 'chart.js';
@@ -31,7 +29,6 @@
     export let dragging: $$Props['dragging']; dragging;
     export let targetPosition: $$Props['targetPosition'] = undefined; targetPosition;
     export let sourcePosition: $$Props['sourcePosition'] = undefined; sourcePosition;
-	let files: FileList;
 	let xColumn = '';
 	let yColumn = '';
 	let plotType = 'line';
@@ -40,16 +37,18 @@
 		nodeId: id,
 		type: 'target'
 	});
+	let table: aq.internal.ColumnTable;
 	let columns: string[] = [];
 	let values: { [key: string]: any }[] = [];
 	let dataToPlot: ChartData<any, number[]> = { labels: [], datasets: [] };
 
 	$: nodeData = useNodesData($connections[0]?.source);
+$: table = $nodeData?.table;
 
-	$: {
-		columns = $nodeData?.columns || [];
-		values = $nodeData?.values || [];
-	}
+	$: { if(table) {
+		columns = table.columnNames() || [];
+		values = table.objects();
+	}}
 
 	$: {
 		dataToPlot = {
