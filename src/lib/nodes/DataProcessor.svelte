@@ -23,6 +23,8 @@
 	import { icon as UploadFileIcon } from './UploadFileNode.svelte';
 	import PropertiesNode from './PropertiesNode.svelte';
 	import { icon as PropertiesIcon } from './PropertiesNode.svelte';
+	import DistributionChartNode from './DistributionChartNode.svelte';
+	import { icon as DistributionChartIcon } from './DistributionChartNode.svelte';
 	import GraphWrapperNode from './GraphWrapperNode.svelte';
 	import { icon as GraphWrapperIcon } from './GraphWrapperNode.svelte';
 	import SpreadsheetNode from './SpreadsheetNode.svelte';
@@ -30,7 +32,7 @@
 	import MonacoNode from './MonacoNode.svelte';
 	import { icon as MonacoIcon } from './MonacoNode.svelte';
 	import PythonNode from './PythonNode.svelte';
-	import {icon as PythonIcon} from './PythonNode.svelte';
+	import { icon as PythonIcon } from './PythonNode.svelte';
 	import ContextMenu from './ContextMenu.svelte';
 
 	const nodeTypes: NodeTypes = {
@@ -39,6 +41,7 @@
 		importNode: ImportNode,
 		uploadNode: UploadFileNode,
 		propertiesNode: PropertiesNode,
+		distributionChartNode: DistributionChartNode,
 		graphWrapperNode: GraphWrapperNode,
 		spreadsheetNode: SpreadsheetNode,
 		monacoNode: MonacoNode,
@@ -51,6 +54,7 @@
 		uploadNode: UploadFileIcon,
 		propertiesNode: PropertiesIcon,
 		graphWrapperNode: GraphWrapperIcon,
+		distributionChartNode: DistributionChartIcon,
 		spreadsheetNode: SpreadsheetIcon,
 		monacoNode: MonacoIcon,
 		pythonNode: PythonIcon
@@ -73,7 +77,7 @@
 			id: Math.random().toString(36).substring(7),
 			type: 'spreadsheetNode',
 			position: { x: 450, y: 100 },
-			data: { columns: [], values: [{}]}
+			data: { columns: [], values: [{}] }
 		}
 	]);
 
@@ -112,7 +116,6 @@
 			{nodes}
 			{edges}
 			{nodeTypes}
-			
 			on:panecontextmenu={handleContextMenu}
 			on:paneclick={handlePaneClick}
 			class="bg-surface-500/5"

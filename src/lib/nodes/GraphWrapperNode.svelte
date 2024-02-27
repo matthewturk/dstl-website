@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
-	import { ChartBarSquare } from '@steeze-ui/heroicons';
-	export const icon = ChartBarSquare;
+	import { PresentationChartLine } from '@steeze-ui/heroicons';
+	export const icon = PresentationChartLine;
 </script>
 <script lang="ts">
 	import {
