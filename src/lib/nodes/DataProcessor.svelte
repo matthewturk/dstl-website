@@ -105,10 +105,6 @@
 		menu = null;
 	}
 </script>
-<button class="btn btn-primary" on:click={() => {$nodes[0].width = 500;}}>
-	Make bigger
-	</button>
-
 <div class="w-full h-full" bind:clientWidth={width} bind:clientHeight={height}>
 	<SvelteFlowProvider>
 		<SvelteFlow
