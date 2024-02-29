@@ -77,7 +77,7 @@
 					{ count: () => 0 },
 					{
 						expand: {
-							b0: (d) => aq.op.sequence(...aq.op.bins(d.b0, 10)),
+							b0: (d) => aq.op.sequence(...aq.op.bins(d.b0, 10))
 						}
 					} // include rows for all bin values
 				)
