@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { useNodes, type NodeTypes} from '@xyflow/svelte';
+	import { useNodes, type NodeTypes, useUpdateNodeInternals} from '@xyflow/svelte';
 	import { Icon, type IconSource} from '@steeze-ui/svelte-icon';
   import { ChevronRight } from '@steeze-ui/heroicons';
 
@@ -12,10 +12,12 @@
 	export let bottom: number | undefined;
 
 	const nodes = useNodes();
+	const updateNodeInternals = useUpdateNodeInternals();
 
 	function addNode(nodeType: string) {
+		const newId = Math.random().toString(36).substring(7);
 		$nodes.push({
-			id: Math.random().toString(36).substring(7),
+			id: newId,
 			type: nodeType,
 			position: {
 				x: (left || 0) + 5,
@@ -23,6 +25,7 @@
 			},
 			data: {}
 		});
+		updateNodeInternals(newId);
 	}
 </script>
 
