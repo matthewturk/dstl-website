@@ -58,7 +58,7 @@ $: table = $nodeData?.table;
 	}
 </script>
 
-<NodeWrapper {icon} label="Graph" resizable={true}>
+<NodeWrapper {id} {icon} label="Graph" resizable={true}>
 	<Handle type="target" position={Position.Left} {isConnectable} />
 	<div class="flex flex-col">
 		<div class="p-2 m-2">
