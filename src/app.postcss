@@ -12,3 +12,17 @@ a.netlify-identity-button {
 	@apply btn;
 	@apply variant-filled-secondary;
 }
+
+@layer components {
+	.dstl-nodebase {
+		@apply flex flex-col max-w-[800px] max-h-[600px] border w-full border-solid border-gray-200 h-full rounded-2xl bg-surface-200/70 shadow-[0_7px_9px_0_rgba(0,0,0,0.02)];
+	}
+
+	.dstl-nodetitle {
+		@apply text-xs flex px-3 py-2 border-b border-solid border-gray-200 font-mono font-semibold rounded-t-2xl text-[#0F172A]
+	}
+
+	.dstl-nodeslot {
+		@apply relative bg-surface-100 p-3 h-full rounded-b-2xl font-sans text-xs 
+	}
+}

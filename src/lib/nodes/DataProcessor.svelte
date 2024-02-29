@@ -109,10 +109,14 @@
 		menu = null;
 	}
 </script>
+<button class="btn btn-primary" on:click={() => {$nodes[0].width = 500;}}>
+	Make bigger
+	</button>
 
-<div class="w-full h-full m-2 p-2" bind:clientWidth={width} bind:clientHeight={height}>
+<div class="w-full h-full" bind:clientWidth={width} bind:clientHeight={height}>
 	<SvelteFlowProvider>
 		<SvelteFlow
+			on:nodeExpand={(e) => console.log('nodeExpand', e)}
 			{nodes}
 			{edges}
 			{nodeTypes}
@@ -123,7 +127,6 @@
 			<MiniMap class="bg-surface-900" zoomable pannable height={120} />
 			<Controls />
 			<Background class="bg-surface-300" gap={16} />
-			<Background />
 			{#if menu}
 				<ContextMenu
 					{nodeTypes}

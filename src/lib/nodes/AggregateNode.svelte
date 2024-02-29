@@ -99,7 +99,7 @@
 	}
 </script>
 
-<NodeWrapper label="Group and Aggregate {column || ''}" {icon}>
+<NodeWrapper {id} label="Group and Aggregate {column || ''}" {icon}>
 	<Handle type="target" position={Position.Left} {isConnectable} />
 	<div class="grid grid-cols-2 align-middle items-center gap-2">
 		<div>
