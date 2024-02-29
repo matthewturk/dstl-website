@@ -43,6 +43,29 @@
 		}
 		updateNodeInternals(result.id);
 	}
+
+	function removeNode() {
+		const result = $nodes.findIndex((node) => node.id === id);
+		if (result === undefined) return;
+		$nodes.splice(result, 1);
+		updateNodeInternals(id);
+	}
+
+	function duplicateNode() {
+		const result = $nodes.find((node) => node.id === id);
+		if (!result) return;
+		$nodes.push({
+			id: Math.random().toString(36).substring(7),
+			type: result.type,
+			position: {
+				x: result.position.x + 50,
+				y: result.position.y + 50,
+			},
+			data: {...result.data}
+		});
+		updateNodeInternals($nodes[$nodes.length - 1].id);
+	}
+
 </script>
 
 {#if resizable}
@@ -50,10 +73,10 @@
 {/if}
 {#if toolbar}
 	<NodeToolbar position={Position.Top} align="start">
-		<button type="button" class="btn-icon btn-icon-sm variant-filled"
+		<button type="button" class="btn-icon btn-icon-sm variant-filled" on:click={removeNode}
 			><Icon size="1.25rem" src={Trash} /></button
 		>
-		<button type="button" class="btn-icon btn-icon-sm variant-filled"
+		<button type="button" class="btn-icon btn-icon-sm variant-filled" on:click={duplicateNode}
 			><Icon size="1.25rem" src={DocumentDuplicate} /></button
 		>
 		<button type="button" class="btn-icon btn-icon-sm variant-filled" on:click={expandNode}
