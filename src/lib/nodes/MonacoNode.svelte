@@ -66,7 +66,7 @@
 	});
 </script>
 
-<NodeWrapper label="Editor" {icon} resizable={true}>
+<NodeWrapper {id} label="Editor" {icon} resizable={true}>
 	<Handle type="target" position={Position.Left} {isConnectable} />
 	<Handle type="source" position={Position.Right} {isConnectable} />
 	<div class="flex flex-col h-full w-full">

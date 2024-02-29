@@ -53,7 +53,7 @@
 	}
 </script>
 
-<NodeWrapper {icon} label="Sort">
+<NodeWrapper {id} {icon} label="Sort">
 	<Handle type="target" position={Position.Left} {isConnectable} />
 	<select
 		id="sortColumn"

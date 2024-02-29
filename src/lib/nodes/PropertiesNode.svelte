@@ -92,7 +92,7 @@
 
 </script>
 
-<NodeWrapper {icon} label="Properties">
+<NodeWrapper {id} {icon} label="Properties">
 	<div class="max-h-72 overflow-y-auto max-w-2/3 overflow-x-auto">
 		<Table source={propertiesTable} interactive={true}/>
 	</div>
