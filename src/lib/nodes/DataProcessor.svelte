@@ -1,4 +1,6 @@
 <script lang="ts">
+  import ControlPanel from './ControlPanel.svelte';
+
 	import '@xyflow/svelte/dist/style.css';
 	import 'tailwindcss/tailwind.css';
 	import { writable } from 'svelte/store';
@@ -7,6 +9,7 @@
 		SvelteFlowProvider,
 		Background,
 		Controls,
+		ControlButton,
 		MiniMap,
 		type Node,
 		type NodeTypes,
@@ -30,7 +33,7 @@
 	import MonacoNode from './MonacoNode.svelte';
 	import { icon as MonacoIcon } from './MonacoNode.svelte';
 	import PythonNode from './PythonNode.svelte';
-	import {icon as PythonIcon} from './PythonNode.svelte';
+	import { icon as PythonIcon } from './PythonNode.svelte';
 	import ContextMenu from './ContextMenu.svelte';
 
 	const nodeTypes: NodeTypes = {
@@ -73,7 +76,7 @@
 			id: Math.random().toString(36).substring(7),
 			type: 'spreadsheetNode',
 			position: { x: 450, y: 100 },
-			data: { columns: [], values: [{}]}
+			data: { columns: [], values: [{}] }
 		}
 	]);
 
@@ -81,6 +84,10 @@
 		{ id: Math.random().toString(36).substring(7), source: $nodes[0].id, target: $nodes[1].id },
 		{ id: Math.random().toString(36).substring(7), source: $nodes[0].id, target: $nodes[2].id }
 	];
+
+	function serializeNodes() {
+		console.log($nodes);
+	}
 
 	const edges = writable(initialEdges);
 
@@ -105,20 +112,19 @@
 		menu = null;
 	}
 </script>
+
 <div class="w-full h-full" bind:clientWidth={width} bind:clientHeight={height}>
 	<SvelteFlowProvider>
 		<SvelteFlow
-			on:nodeExpand={(e) => console.log('nodeExpand', e)}
 			{nodes}
 			{edges}
 			{nodeTypes}
-			
 			on:panecontextmenu={handleContextMenu}
 			on:paneclick={handlePaneClick}
 			class="bg-surface-500/5"
 		>
 			<MiniMap class="bg-surface-900" zoomable pannable height={120} />
-			<Controls />
+<ControlPanel></ControlPanel>
 			<Background class="bg-surface-300" gap={16} />
 			{#if menu}
 				<ContextMenu
