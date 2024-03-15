@@ -80,7 +80,7 @@
 	}
 </script>
 
-<NodeWrapper label="Python Script" {icon}>
+<NodeWrapper {id} label="Python Script" {icon}>
 	<div class="flex flex-col w-96">
 		<div class="flex flex-row">
 			<button type="button" class="btn variant-filled w-16 p-1 m-1" on:click={executeScript}

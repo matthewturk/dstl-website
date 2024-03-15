@@ -22,7 +22,7 @@
 	const { url, format } = data;
 </script>
 
-<NodeWrapper {icon} label="Import Data">
+<NodeWrapper {id} {icon} label="Import Data">
 	<input type="text" id="url" value={$url} />
 	<select
 		id="format"

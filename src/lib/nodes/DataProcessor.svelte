@@ -105,22 +105,21 @@
 		menu = null;
 	}
 </script>
-
-<div class="w-full h-full m-2 p-2" bind:clientWidth={width} bind:clientHeight={height}>
+<div class="w-full h-full" bind:clientWidth={width} bind:clientHeight={height}>
 	<SvelteFlowProvider>
 		<SvelteFlow
+			on:nodeExpand={(e) => console.log('nodeExpand', e)}
 			{nodes}
 			{edges}
 			{nodeTypes}
-			fitView
+			
 			on:panecontextmenu={handleContextMenu}
 			on:paneclick={handlePaneClick}
 			class="bg-surface-500/5"
 		>
 			<MiniMap class="bg-surface-900" zoomable pannable height={120} />
 			<Controls />
-			<Background class="bg-surface-500" gap={16} />
-			<Background />
+			<Background class="bg-surface-300" gap={16} />
 			{#if menu}
 				<ContextMenu
 					{nodeTypes}
