@@ -4,8 +4,7 @@
 </script>
 
 <script lang="ts">
-	import { Handle, Position, type NodeProps } from '@xyflow/svelte';
-	import { AggregationType } from './constants';
+	import { Handle, Position, type NodeProps, useSvelteFlow } from '@xyflow/svelte';
 	import NodeWrapper from './NodeWrapper.svelte';
 	type $$Props = NodeProps;
 	export let id: $$Props['id'];
@@ -39,7 +38,8 @@
 	let model: Monaco.editor.IModel;
 	let monaco: typeof Monaco;
 	let editorContainer: HTMLElement;
-	let language: string = 'json';
+	let language: string = 'javascript';
+	const { updateNodeData } = useSvelteFlow();
 
 	onMount(async () => {
 		// Import our 'monaco.ts' file here
@@ -48,11 +48,14 @@
 
 		// Your monaco instance is ready, let's display some code!
 		editor = monaco.editor.create(editorContainer, { automaticLayout: true });
-		model = monaco.editor.createModel(
-			"console.log('Hello from Monaco! (the editor, not the city...)')",
-			'javascript'
-		);
+		model = monaco.editor.createModel("console.log('Hello.');", 'javascript');
 		editor.setModel(model);
+		model.onDidChangeContent(() => {
+			updateNodeData(id, {
+				script: model?.getValue(),
+				language: language
+			});
+		});
 	});
 	$: {
 		if (monaco && editor && model) {
