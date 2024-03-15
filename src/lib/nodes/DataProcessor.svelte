@@ -1,5 +1,6 @@
 <script lang="ts">
   import ControlPanel from './ControlPanel.svelte';
+  import { serializeNodesToJSON } from '$lib/nodeserializer';
 
 	import '@xyflow/svelte/dist/style.css';
 	import 'tailwindcss/tailwind.css';
@@ -111,6 +112,7 @@
 	function handlePaneClick() {
 		menu = null;
 	}
+	const loadNodes = () => null;
 </script>
 
 <div class="w-full h-full" bind:clientWidth={width} bind:clientHeight={height}>
@@ -124,7 +126,7 @@
 			class="bg-surface-500/5"
 		>
 			<MiniMap class="bg-surface-900" zoomable pannable height={120} />
-<ControlPanel></ControlPanel>
+<ControlPanel saveNodes={() => serializeNodesToJSON($nodes)} {loadNodes}></ControlPanel>
 			<Background class="bg-surface-300" gap={16} />
 			{#if menu}
 				<ContextMenu
