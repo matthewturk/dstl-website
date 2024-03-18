@@ -1,7 +1,7 @@
-import type { Node } from "@xyflow/svelte"
+import type { Node, Edge } from "@xyflow/svelte"
 
-export async function serializeNodesToJSON(nodes: Node[]) {
-    const v = JSON.stringify(nodes, (key, value) => {
+export async function serializeGraphToJSON(nodes: Node[], edges: Edge[]): Promise<string> {
+    const v = JSON.stringify({edges, nodes}, (key, value) => {
         if (key === 'columns') {
             return [];
         } else if (key === 'values') {
@@ -9,20 +9,20 @@ export async function serializeNodesToJSON(nodes: Node[]) {
         }
         return value;
     }, 2);
-    console.log(v);
-    const link = document.createElement("a");
-    const blob = new Blob([v], { type: "text/json" });
+return v
+}
 
-    link.download = "DSTL-nodes.json";
-    link.href = window.URL.createObjectURL(blob);
-    link.dataset.downloadurl = ["text/json", link.download, link.href].join(":");
-
-    const evt = new MouseEvent("click", {
-        view: window,
-        bubbles: true,
-        cancelable: true,
-    });
-
-    link.dispatchEvent(evt);
-    link.remove()
+export async function loadGraphFromJSON(nodes: Node[], edges: Edge[], jsonInput: string) {
+    console.log(jsonInput);
+    const graph = JSON.parse(jsonInput);
+    const nodesToAdd = graph.nodes;
+    const edgesToAdd = graph.edges;
+    edges.splice(0, edges.length);  // clear the array
+    nodes.splice(0, nodes.length);  // clear the array
+    for (const node of nodesToAdd) {
+        nodes.push(node);
+    }
+    for (const edge of edgesToAdd) {
+        edges.push(edge);
+    }
 }
