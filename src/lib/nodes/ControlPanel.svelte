@@ -7,23 +7,32 @@
 		useNodes,
 		useEdges,
 		useUpdateNodeInternals,
-		type Node,
-		type Edge
+		addEdge, isEdge, type Edge
 	} from '@xyflow/svelte';
 	import { FileButton } from '@skeletonlabs/skeleton';
-	import { ArrowDownTray } from '@steeze-ui/heroicons';
-	import { ArrowUpTray } from '@steeze-ui/heroicons';
-	import { Icon, type IconSource } from '@steeze-ui/svelte-icon';
+	import { Icon } from '@steeze-ui/svelte-icon';
+	import { ArrowDownTray, ArrowUpTray, Trash } from '@steeze-ui/heroicons';
 	import { loadGraphFromJSON, serializeGraphToJSON } from '$lib/nodeserializer';
 	let files: FileList;
+	let fileInput: FileButton;
 	const nodes = useNodes();
 	const edges = useEdges();
 	const updateNodeInternals = useUpdateNodeInternals();
-	async function parseAndLoad() {
-		const text = await files[0].text();
-		loadGraphFromJSON($nodes, $edges, text);
-		$nodes.forEach((n) => updateNodeInternals(n.id));
+	async function deleteAllNodes() {
+		edges.set([]);
+		nodes.set([]);
 	}
+	let loaded = false;
+	async function parseAndLoad() {
+		if (files.length == 0) return;
+		const jsonInput = await files[0].text();
+		const graph = JSON.parse(jsonInput);
+		nodes.set(graph.nodes);
+		edges.set(graph.edges);
+		$nodes.forEach((n) => updateNodeInternals(n.id));
+		fileInput.value = '';
+	}
+
 	async function serializeAndSave() {
 		const v = await serializeGraphToJSON($nodes, $edges);
 		const link = document.createElement('a');
@@ -46,11 +55,14 @@
 
 <Controls>
 	<ControlButton>
-		<FileButton name="files" bind:files on:change={parseAndLoad} button=""
+		<FileButton name="files" bind:this={fileInput} bind:files on:change={parseAndLoad} button=""
 			><Icon size="1.25rem" src={ArrowUpTray} /></FileButton
 		>
 	</ControlButton>
 	<ControlButton on:click={serializeAndSave}>
 		<Icon size="1.25rem" src={ArrowDownTray} />
+	</ControlButton>
+	<ControlButton on:click={deleteAllNodes}>
+		<Icon size="1.25rem" src={Trash} />
 	</ControlButton>
 </Controls>

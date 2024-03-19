@@ -86,11 +86,7 @@
 		{ id: Math.random().toString(36).substring(7), source: $nodes[0].id, target: $nodes[2].id }
 	];
 
-	function serializeNodes() {
-		console.log($nodes);
-	}
-
-	const edges = writable(initialEdges);
+	const edges = writable<Edge[]>(initialEdges);
 
 	let menu: { top?: number; left?: number; right?: number; bottom?: number } | null;
 	let width: number;
