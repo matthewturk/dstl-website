@@ -50,6 +50,7 @@
 		editor = monaco.editor.create(editorContainer, { automaticLayout: true });
 		model = monaco.editor.createModel("console.log('Hello.');", 'javascript');
 		editor.setModel(model);
+		model.setValue(data?.script || '');
 		model.onDidChangeContent(() => {
 			updateNodeData(id, {
 				script: model?.getValue(),

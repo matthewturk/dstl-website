@@ -7,12 +7,13 @@
 		useNodes,
 		useEdges,
 		useUpdateNodeInternals,
-		addEdge, isEdge, type Edge
+		addEdge,
+		isEdge,
+		type Edge
 	} from '@xyflow/svelte';
 	import { FileButton } from '@skeletonlabs/skeleton';
 	import { Icon } from '@steeze-ui/svelte-icon';
 	import { ArrowDownTray, ArrowUpTray, Trash } from '@steeze-ui/heroicons';
-	import { loadGraphFromJSON, serializeGraphToJSON } from '$lib/nodeserializer';
 	let files: FileList;
 	let fileInput: FileButton;
 	const nodes = useNodes();
@@ -34,7 +35,21 @@
 	}
 
 	async function serializeAndSave() {
-		const v = await serializeGraphToJSON($nodes, $edges);
+		const v = JSON.stringify(
+			{ edges: $edges, nodes: $nodes },
+			(key, value) => {
+				if (key === 'columns') {
+					return [];
+				} else if (key === 'values') {
+					return [];
+				} else if (key === 'selected') {
+					console.log('Changing selected to false');
+					return false;
+				}
+				return value;
+			},
+			2
+		);
 		const link = document.createElement('a');
 		const blob = new Blob([v], { type: 'text/json' });
 
