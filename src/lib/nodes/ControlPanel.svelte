@@ -7,12 +7,14 @@
 		useNodes,
 		useEdges,
 		useUpdateNodeInternals,
-		addEdge, isEdge, type Edge
+		addEdge,
+		isEdge,
+		type Edge
 	} from '@xyflow/svelte';
 	import { FileButton } from '@skeletonlabs/skeleton';
 	import { Icon } from '@steeze-ui/svelte-icon';
 	import { ArrowDownTray, ArrowUpTray, Trash } from '@steeze-ui/heroicons';
-	import { loadGraphFromJSON, serializeGraphToJSON } from '$lib/nodeserializer';
+	import * as aq from 'arquero';
 	let files: FileList;
 	let fileInput: FileButton;
 	const nodes = useNodes();
@@ -26,7 +28,12 @@
 	async function parseAndLoad() {
 		if (files.length == 0) return;
 		const jsonInput = await files[0].text();
-		const graph = JSON.parse(jsonInput);
+		const graph = JSON.parse(jsonInput, (key, value) => {
+			if (key === 'table') {
+				return aq.fromJSON(value);
+			}
+			return value;
+		});
 		nodes.set(graph.nodes);
 		edges.set(graph.edges);
 		$nodes.forEach((n) => updateNodeInternals(n.id));
@@ -34,7 +41,16 @@
 	}
 
 	async function serializeAndSave() {
-		const v = await serializeGraphToJSON($nodes, $edges);
+		const v = JSON.stringify(
+			{ edges: $edges, nodes: $nodes },
+			(key, value) => {
+				if (key === 'table' && value.toJSON) {
+					return (value as aq.internal.ColumnTable).toJSON();
+				} 
+				return value;
+			},
+			2
+		);
 		const link = document.createElement('a');
 		const blob = new Blob([v], { type: 'text/json' });
 

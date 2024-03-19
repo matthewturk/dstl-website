@@ -1,6 +1,5 @@
 <script lang="ts">
   import ControlPanel from './ControlPanel.svelte';
-  import { serializeGraphToJSON, loadGraphFromJSON } from '$lib/nodeserializer';
 
 	import '@xyflow/svelte/dist/style.css';
 	import 'tailwindcss/tailwind.css';

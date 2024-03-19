@@ -14,7 +14,7 @@
 	} from '@xyflow/svelte';
 	import { DataHandler, Datatable, Th, ThFilter, type Row, type Field } from '@vincjo/datatables';
 	import NodeWrapper from './NodeWrapper.svelte';
-	import type * as aq from 'arquero';
+	import * as aq from 'arquero';
 	type $$Props = NodeProps;
 	export let id: $$Props['id'];
 	id;
@@ -50,7 +50,7 @@
 	});
 
 	let rowCols: Field<Row>[];
-	let table: aq.internal.ColumnTable;
+	let table: aq.internal.ColumnTable = data['table'];
 
 	$: nodeData = useNodesData($connections[0]?.source);
 
@@ -60,6 +60,9 @@
 			rowCols = [];
 			handler.setRows([{}]);
 		} else {
+			if (!table.columnNames) {
+				table = aq.fromJSON(table);
+			}
 			rowCols = table?.columnNames().map((column) => column as Field<Row>);
 			handler.setRows(table?.objects());
 		}
