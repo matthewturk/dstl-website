@@ -47,9 +47,9 @@
 		type: 'target'
 	});
 	const { updateNodeData } = useSvelteFlow();
-	let table: aq.internal.ColumnTable;
-	let aggregationType: AggregationType = AggregationType.Count;
-	let column: string = '';
+	let table: aq.internal.ColumnTable = data['table'] || null;
+	let aggregationType: AggregationType = data['AggregationType'] || AggregationType.Count;
+	let column: string = data['column'] || '';
 
 	const opMap: { [key: AggregationType]: aq.internal.Verb } = {
 		[AggregationType.Count]: aq.op.count,
@@ -80,7 +80,7 @@
 		);
 		delete rollUps[column];
 		const v = table.groupby(column).rollup(rollUps);
-		updateNodeData(id, { table: v });
+		updateNodeData(id, {column, aggregationType, table: v });
 	}
 
 	$: nodeData = useNodesData($connections[0]?.source);

@@ -2,13 +2,15 @@
 	import { ChartBarSquare } from '@steeze-ui/heroicons';
 	export const icon = ChartBarSquare;
 </script>
+
 <script lang="ts">
 	import {
 		Handle,
 		Position,
 		type NodeProps,
 		useHandleConnections,
-		useNodesData
+		useNodesData,
+		useSvelteFlow
 	} from '@xyflow/svelte';
 	import { Line, Scatter, Bar } from 'svelte-chartjs';
 	import * as aq from 'arquero';
@@ -16,39 +18,55 @@
 	import 'chart.js/auto';
 	import type { ChartData, ChartDataset } from 'chart.js';
 	import NodeWrapper from './NodeWrapper.svelte';
-    type $$Props = NodeProps;
-    export let id: $$Props['id']; id;
-    export let data: $$Props['data']; data;
-    export let dragHandle: $$Props['dragHandle'] = undefined; dragHandle;
-    export let type: $$Props['type']  = undefined; type;
-    export let selected: $$Props['selected'] = undefined; selected;
-    export let isConnectable: $$Props['isConnectable'] = undefined; isConnectable;
-    export let zIndex: $$Props['zIndex'] = undefined; zIndex;
-    export let width: $$Props['width'] = undefined; width;
-    export let height: $$Props['height'] = undefined; height;
-    export let dragging: $$Props['dragging']; dragging;
-    export let targetPosition: $$Props['targetPosition'] = undefined; targetPosition;
-    export let sourcePosition: $$Props['sourcePosition'] = undefined; sourcePosition;
-	let xColumn = '';
-	let yColumn = '';
-	let plotType = 'line';
+	type $$Props = NodeProps;
+	export let id: $$Props['id'];
+	id;
+	export let data: $$Props['data'];
+	data;
+	export let dragHandle: $$Props['dragHandle'] = undefined;
+	dragHandle;
+	export let type: $$Props['type'] = undefined;
+	type;
+	export let selected: $$Props['selected'] = undefined;
+	selected;
+	export let isConnectable: $$Props['isConnectable'] = undefined;
+	isConnectable;
+	export let zIndex: $$Props['zIndex'] = undefined;
+	zIndex;
+	export let width: $$Props['width'] = undefined;
+	width;
+	export let height: $$Props['height'] = undefined;
+	height;
+	export let dragging: $$Props['dragging'];
+	dragging;
+	export let targetPosition: $$Props['targetPosition'] = undefined;
+	targetPosition;
+	export let sourcePosition: $$Props['sourcePosition'] = undefined;
+	sourcePosition;
+	const { updateNodeData } = useSvelteFlow();
+	let xColumn = data['xColumn'] || '';
+	let yColumn = data['yColumn'] || '';
+	let plotType = data['plotType'] || 'line';
 
 	const connections = useHandleConnections({
 		nodeId: id,
 		type: 'target'
 	});
-	let table: aq.internal.ColumnTable;
+	let table: aq.internal.ColumnTable = data['table'] || null;
 	let columns: string[] = [];
 	let values: { [key: string]: any }[] = [];
 	let dataToPlot: ChartData<any, number[]> = { labels: [], datasets: [] };
 
 	$: nodeData = useNodesData($connections[0]?.source);
-$: table = $nodeData?.table;
+	$: table = $nodeData?.table;
+	$: updateNodeData(id, { xColumn, yColumn, plotType });
 
-	$: { if(table) {
-		columns = table.columnNames() || [];
-		values = table.objects();
-	}}
+	$: {
+		if (table) {
+			columns = table.columnNames() || [];
+			values = table.objects();
+		}
+	}
 
 	$: {
 		dataToPlot = {

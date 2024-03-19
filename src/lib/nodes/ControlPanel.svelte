@@ -14,6 +14,7 @@
 	import { FileButton } from '@skeletonlabs/skeleton';
 	import { Icon } from '@steeze-ui/svelte-icon';
 	import { ArrowDownTray, ArrowUpTray, Trash } from '@steeze-ui/heroicons';
+	import * as aq from 'arquero';
 	let files: FileList;
 	let fileInput: FileButton;
 	const nodes = useNodes();
@@ -27,7 +28,12 @@
 	async function parseAndLoad() {
 		if (files.length == 0) return;
 		const jsonInput = await files[0].text();
-		const graph = JSON.parse(jsonInput);
+		const graph = JSON.parse(jsonInput, (key, value) => {
+			if (key === 'table') {
+				return aq.fromJSON(value);
+			}
+			return value;
+		});
 		nodes.set(graph.nodes);
 		edges.set(graph.edges);
 		$nodes.forEach((n) => updateNodeInternals(n.id));
@@ -38,14 +44,9 @@
 		const v = JSON.stringify(
 			{ edges: $edges, nodes: $nodes },
 			(key, value) => {
-				if (key === 'columns') {
-					return [];
-				} else if (key === 'values') {
-					return [];
-				} else if (key === 'selected') {
-					console.log('Changing selected to false');
-					return false;
-				}
+				if (key === 'table' && value.toJSON) {
+					return (value as aq.internal.ColumnTable).toJSON();
+				} 
 				return value;
 			},
 			2

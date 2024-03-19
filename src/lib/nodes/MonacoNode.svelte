@@ -78,7 +78,7 @@
 			<option value="javascript">javascript</option>
 			<option value="python">python</option>
 			<option value="json">json</option>
-            <option value="markdown">markdown</option>
+			<option value="markdown">markdown</option>
 		</select>
 		<div class="flex-1 min-w-0 min-h-0 p-2 m-2">
 			<div style="width: 100%; height: 100%;" bind:this={editorContainer} />
