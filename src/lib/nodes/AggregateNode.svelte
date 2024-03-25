@@ -17,6 +17,7 @@
 	import { AggregationType } from './constants';
 	import * as aq from 'arquero';
 	import NodeWrapper from './NodeWrapper.svelte';
+	export let highlighted = false;
 	type $$Props = NodeProps;
 	export let id: $$Props['id'];
 	id;
@@ -99,7 +100,7 @@
 	}
 </script>
 
-<NodeWrapper {id} label="Group and Aggregate {column || ''}" {icon}>
+<NodeWrapper {highlighted} {id} label="Group and Aggregate {column || ''}" {icon}>
 	<Handle type="target" position={Position.Left} {isConnectable} />
 	<div class="grid grid-cols-2 align-middle items-center gap-2">
 		<div>

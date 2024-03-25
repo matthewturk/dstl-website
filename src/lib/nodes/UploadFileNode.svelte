@@ -21,6 +21,7 @@
     export let targetPosition: $$Props['targetPosition'] = undefined; targetPosition;
     export let sourcePosition: $$Props['sourcePosition'] = undefined; sourcePosition;
     const { updateNodeData } = useSvelteFlow();
+    let highlighted = false;
 	let files: FileList;
 
 	async function parseFile() {
@@ -28,9 +29,12 @@
 		let table = await aq.fromCSV(text);
         updateNodeData(id, { table });
 	}
+
+    $: highlighted = data['highlighted'] || false;
+
 </script>
 
-<NodeWrapper {id} {icon} label="Upload">
+<NodeWrapper {highlighted} {id} {icon} label="Upload">
 	<div class="flex-row">
 	<label for="file" class="p-2 font-semibold text-xl">{(files || [{'name':''}])[0].name}</label>
 	<FileButton name="file" multiple="false" bind:files on:change={parseFile} />

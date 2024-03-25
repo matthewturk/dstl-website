@@ -1,5 +1,8 @@
 <script lang="ts">
+  import TutorialStepper from './TutorialStepper.svelte';
+
   import ControlPanel from './ControlPanel.svelte';
+  import {Stepper, Step} from '@skeletonlabs/skeleton';
 
 	import '@xyflow/svelte/dist/style.css';
 	import 'tailwindcss/tailwind.css';
@@ -8,8 +11,6 @@
 		SvelteFlow,
 		SvelteFlowProvider,
 		Background,
-		Controls,
-		ControlButton,
 		MiniMap,
 		type Node,
 		type NodeTypes,
@@ -63,19 +64,19 @@
 		{
 			id: Math.random().toString(36).substring(7),
 			type: 'uploadNode',
-			position: { x: 200, y: 100 },
+			position: { x: 500, y: 100 },
 			data: { values: writable([{}]), columns: writable([]) }
 		},
 		{
 			id: Math.random().toString(36).substring(7),
 			type: 'propertiesNode',
-			position: { x: 300, y: 0 },
+			position: { x: 600, y: 0 },
 			data: {}
 		},
 		{
 			id: Math.random().toString(36).substring(7),
 			type: 'spreadsheetNode',
-			position: { x: 450, y: 100 },
+			position: { x: 750, y: 100 },
 			data: { columns: [], values: [{}] }
 		}
 	]);
@@ -109,6 +110,7 @@
 	}
 </script>
 
+
 <div class="w-full h-full" bind:clientWidth={width} bind:clientHeight={height}>
 	<SvelteFlowProvider>
 		<SvelteFlow
@@ -119,9 +121,10 @@
 			on:paneclick={handlePaneClick}
 			class="bg-surface-500/5"
 		>
+<TutorialStepper></TutorialStepper>
 			<MiniMap class="bg-surface-900" zoomable pannable height={120} />
 <ControlPanel></ControlPanel>
-			<Background class="bg-surface-300" gap={16} />
+			<Background class="bg-surface-variant-300" gap={16} />
 			{#if menu}
 				<ContextMenu
 					{nodeTypes}
