@@ -13,8 +13,10 @@
 	} from '@xyflow/svelte';
 	import { FileButton } from '@skeletonlabs/skeleton';
 	import { Icon } from '@steeze-ui/svelte-icon';
-	import { ArrowDownTray, ArrowUpTray, Trash } from '@steeze-ui/heroicons';
+	import { ArrowDownTray, ArrowUpTray, Trash, QuestionMarkCircle } from '@steeze-ui/heroicons';
 	import * as aq from 'arquero';
+	import { writable } from 'svelte/store';
+	export let guidelinesVisible = writable<boolean>(true);
 	let files: FileList;
 	let fileInput: FileButton;
 	const nodes = useNodes();
@@ -46,7 +48,7 @@
 			(key, value) => {
 				if (key === 'table' && value.toJSON) {
 					return (value as aq.internal.ColumnTable).toJSON();
-				} 
+				}
 				return value;
 			},
 			2
@@ -67,6 +69,10 @@
 		link.dispatchEvent(evt);
 		link.remove();
 	}
+
+    async function clickedHelp() {
+		$guidelinesVisible = true;
+	}
 </script>
 
 <Controls>
@@ -80,5 +86,8 @@
 	</ControlButton>
 	<ControlButton on:click={deleteAllNodes}>
 		<Icon size="1.25rem" src={Trash} />
+	</ControlButton>
+	<ControlButton on:click={clickedHelp}>
+		<Icon size="1.25rem" src={QuestionMarkCircle} />
 	</ControlButton>
 </Controls>

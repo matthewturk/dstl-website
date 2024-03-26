@@ -2,24 +2,27 @@
 	import MarkdownContent from '$lib/MarkdownContent.svelte';
 	import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
 	import { fade } from 'svelte/transition';
+	export let storyType = 'achievement';
 
-	const narrativeOptions = [
-		{
-			icon: 'benchmarking.png',
-			title: 'Benchmarking',
-			text: 'A narrative focused on benchmarking performance.'
-		},
-		{
+	const narrativeOptions: { [key: string]: { icon: string; title: string; text: string } } = {
+		achievement: {
 			icon: 'achievement_narrative.png',
 			title: 'Achievement',
 			text: 'A story describing a particular achievement.'
 		},
-		{
+		benchmarking: {
+			icon: 'benchmarking.png',
+			title: 'Benchmarking',
+			text: 'A narrative focused on benchmarking performance.'
+		},
+		justification: {
 			icon: 'justification.png',
 			title: 'Justification',
 			text: 'Justifying or examining past decisions.'
 		}
-	];
+	};
+
+	$: option = narrativeOptions[storyType];
 
 	const motivationOptions = [
 		{
@@ -53,35 +56,20 @@
 	let narrative: number = -1;
 </script>
 
-<MarkdownContent pagename="create"/>
-
-<ListBox class="w-5/6 grid grid-cols-3">
-	{#each narrativeOptions as option, i}
-		<div>
-			<ListBoxItem
-				class="card card-hover p-4 m-4 flex justify-center objects-top h-40"
-				bind:group={narrative}
-				name="Item {i}"
-				value={i}
-			>
-				<header class="flex h-14 justify-center items-center card-header">
-					<img alt={option.text} class="h-12" src={option.icon} />
-				</header>
-				<section class="pt-2 h-10 items-center justify-center text-center">
-					{option.text}
-				</section>
-				<footer class="card-footer p-4 text-center"><h3>{option.title}</h3></footer>
-			</ListBoxItem>
-		</div>
-	{/each}
-</ListBox>
-<hr />
-<div class="w-5/6 flex-1 grid grid-cols-3">
-	<ListBox class="m-4 p-4 col-span-1">
+<div class="w-full text-token card p-4 m-4 flex flex-row">
+	<div class="w-1/4">
+		<img alt={option.text} class="h-12" src={option.icon} />
+	</div>
+	<div class="w-3/4">
+		<h3>{option.title}</h3>
+		{option.text}
+	</div>
+</div>
+<div class="w-full text-token card p-4 m-4 flex flex-col">
+	<ListBox class="m-4 p-4">
 		{#each motivationOptions as option, i}
-			<ListBoxItem bind:group={need} name={option.value} value={i}
-			class="bg-surface-700"
-				><svelte:fragment slot="lead"
+			<ListBoxItem bind:group={need} name={option.value} value={i} class="variant-filled-tertiary">
+				<svelte:fragment slot="lead"
 					><img width="50px" alt={option.title} src={option.icon} /></svelte:fragment
 				>{option.title}</ListBoxItem
 			>
@@ -95,10 +83,10 @@
 </div>
 <hr />
 {#if need == 0}
-	<div class="w-5/6 flex-1 grid-grid-cols-3">
+	<div class="w-full flex-1 grid-grid-cols-4">
 		<div class="p-4" transition:fade={{ duration: 200 }}>
 			<ListBox>
-				<div class="w-full text-token grid grid-cols-1 md:grid-cols-2 gap-4">
+				<div class="w-full text-token grid grid-cols-4 md:grid-cols-2 gap-4">
 					{#each Array.from({ length: 8 }) as _, i}
 						<ListBoxItem
 							class="card p-4 flex justify-center items-center"
