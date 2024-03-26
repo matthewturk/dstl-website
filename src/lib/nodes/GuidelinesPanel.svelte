@@ -21,9 +21,9 @@
 			<span class="m-2"
 				><select class="select" bind:value={selected}>
 					<option value="howto">How to Use This</option>
-					<option value="achievement">Achievement</option>
-					<option value="benchmarking">Benchmarking</option>
-					<option value="justification">Justification</option>
+					<!--<option value="achievement">Achievement</option>-->
+					<!--<option value="benchmarking">Benchmarking</option>-->
+					<!--<option value="justification">Justification</option>-->
 				</select></span
 			>
 		</div>

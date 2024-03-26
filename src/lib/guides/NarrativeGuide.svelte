@@ -65,44 +65,43 @@
 		{option.text}
 	</div>
 </div>
-	<hr />
-	<div class="w-full flex-1 grid grid-cols-3">
-		<ListBox class="m-4 p-4 col-span-1">
-			{#each motivationOptions as option, i}
-				<ListBoxItem bind:group={need} name={option.value} value={i} class="variant-filled-secondary">
-					<svelte:fragment slot="lead"
-						><img width="50px" alt={option.title} src={option.icon} /></svelte:fragment
-					>{option.title}</ListBoxItem
-				>
-			{/each}
-		</ListBox>
-		{#if need >= 0}
-			<div class="m-4 p-4 col-span-2 rounded-lg bg-surface-600">
-				{motivationOptions[need]['text']}
-			</div>
-		{/if}
-	</div>
-	<hr />
-	{#if need == 0}
-		<div class="w-full flex-1 grid-grid-cols-3">
-			<div class="p-4" transition:fade={{ duration: 200 }}>
-				<ListBox>
-					<div class="w-full text-token grid grid-cols-1 md:grid-cols-2 gap-4">
-						{#each Array.from({ length: 8 }) as _, i}
-							<ListBoxItem
-								class="card p-4 flex justify-center items-center"
-								bind:group={thing}
-								name="Item {i}"
-								value={i}
-							>
-								Item {i}
-								lorem ipsum<br />
-								just lots of stuff<br />
-								fjweihvjrio
-							</ListBoxItem>
-						{/each}
-					</div>
-				</ListBox>
-			</div>
+<div class="w-full text-token card p-4 m-4 flex flex-col">
+	<ListBox class="m-4 p-4">
+		{#each motivationOptions as option, i}
+			<ListBoxItem bind:group={need} name={option.value} value={i} class="variant-filled-tertiary">
+				<svelte:fragment slot="lead"
+					><img width="50px" alt={option.title} src={option.icon} /></svelte:fragment
+				>{option.title}</ListBoxItem
+			>
+		{/each}
+	</ListBox>
+	{#if need >= 0}
+		<div class="m-4 p-4 col-span-2 rounded-lg bg-surface-600">
+			{motivationOptions[need]['text']}
 		</div>
 	{/if}
+</div>
+<hr />
+{#if need == 0}
+	<div class="w-full flex-1 grid-grid-cols-4">
+		<div class="p-4" transition:fade={{ duration: 200 }}>
+			<ListBox>
+				<div class="w-full text-token grid grid-cols-4 md:grid-cols-2 gap-4">
+					{#each Array.from({ length: 8 }) as _, i}
+						<ListBoxItem
+							class="card p-4 flex justify-center items-center"
+							bind:group={thing}
+							name="Item {i}"
+							value={i}
+						>
+							Item {i}
+							lorem ipsum<br />
+							just lots of stuff<br />
+							fjweihvjrio
+						</ListBoxItem>
+					{/each}
+				</div>
+			</ListBox>
+		</div>
+	</div>
+{/if}

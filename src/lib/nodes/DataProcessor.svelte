@@ -41,14 +41,14 @@
 	const nodeTypes: NodeTypes = {
 		sortNode: SortNode,
 		aggregateNode: AggregateNode,
-		importNode: ImportNode,
+		//importNode: ImportNode,
 		uploadNode: UploadFileNode,
 		propertiesNode: PropertiesNode,
-		distributionChartNode: DistributionChartNode,
+		//distributionChartNode: DistributionChartNode,
 		graphWrapperNode: GraphWrapperNode,
 		spreadsheetNode: SpreadsheetNode,
-		monacoNode: MonacoNode,
-		pythonNode: PythonNode
+		//monacoNode: MonacoNode,
+		//pythonNode: PythonNode
 	};
 	const nodeIcons = {
 		sortNode: SortIcon,

@@ -82,7 +82,7 @@
 					If you'd like, you can click here to <i>simulate</i>
 					uploading a file. The rest of the tutorial will assume you are using this data.
 				</p>
-				<p>This simulated data is a subset of the library data from Michigan Public Libraries from 2020-2021.</p>
+				<p>This data is a subset of the library data from Michigan Public Libraries from 2020-2021.</p>
 				<button type="button" class="btn variant-filled-secondary" on:click={useSampleData}
 					>Upload for me!</button
 				>
@@ -110,9 +110,9 @@
 				<svelte:fragment slot="header">Adding New Nodes</svelte:fragment>
 				<p>
 					New nodes are available for you to add as well! You can see what is available by
-					right-clicking in the canvas.
+					right-clicking on the blank space where the nodes live.
 				</p>
-				<p>Right now, the Python and Monaco nodes don't do much, but they're under development.</p>
+				<!--<p>Right now, the Python and Monaco nodes don't do much, but they're under development.</p>-->
 				<p>For now, go ahead and add a <i>Graph Wrapper</i> node and an
 				<i>Aggregate</i> node.  Once you've added them, you can move to
 				the next step.</p>
