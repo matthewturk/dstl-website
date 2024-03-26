@@ -1,8 +1,7 @@
 <script lang="ts">
-  import TutorialStepper from './TutorialStepper.svelte';
+	import GuidelinesPanel from './GuidelinesPanel.svelte';
 
-  import ControlPanel from './ControlPanel.svelte';
-  import {Stepper, Step} from '@skeletonlabs/skeleton';
+	import ControlPanel from './ControlPanel.svelte';
 
 	import '@xyflow/svelte/dist/style.css';
 	import 'tailwindcss/tailwind.css';
@@ -112,8 +111,8 @@
 	function handlePaneClick() {
 		menu = null;
 	}
+	let guidelinesVisible = writable<boolean>(true);
 </script>
-
 
 <div class="w-full h-full" bind:clientWidth={width} bind:clientHeight={height}>
 	<SvelteFlowProvider>
@@ -125,9 +124,9 @@
 			on:paneclick={handlePaneClick}
 			class="bg-surface-500/5"
 		>
-<TutorialStepper></TutorialStepper>
+			<GuidelinesPanel bind:visible={guidelinesVisible}/>
 			<MiniMap class="bg-surface-900" zoomable pannable height={120} />
-<ControlPanel></ControlPanel>
+			<ControlPanel {guidelinesVisible}/>
 			<Background class="bg-surface-variant-300" gap={16} />
 			{#if menu}
 				<ContextMenu
