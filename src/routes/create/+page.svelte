@@ -1,6 +1,6 @@
 <script lang="ts">
 	import MarkdownContent from '$lib/MarkdownContent.svelte';
-import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
+	import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
 	import { fade } from 'svelte/transition';
 
 	const narrativeOptions = [

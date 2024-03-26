@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Stepper, Step } from '@skeletonlabs/skeleton';
 	import { Panel, useSvelteFlow, useNodes } from '@xyflow/svelte';
-	import { csvString } from '$lib/exampledata';
+	import { michiganLibraryDataString } from '$lib/exampledata';
 	import * as aq from 'arquero';
 
 	import '@xyflow/svelte/dist/style.css';
@@ -24,7 +24,7 @@
 	}
 
 	async function useSampleData() {
-		const table = await aq.fromCSV(csvString);
+		const table = await aq.fromCSV(michiganLibraryDataString);
 		console.log('Table');
 		updateNodeData($nodes[0].id, { inputTable: table });
 	}
@@ -82,6 +82,7 @@
 					If you'd like, you can click here to <i>simulate</i>
 					uploading a file. The rest of the tutorial will assume you are using this data.
 				</p>
+				<p>This simulated data is a subset of the library data from Michigan Public Libraries from 2020-2021.</p>
 				<button type="button" class="btn variant-filled-secondary" on:click={useSampleData}
 					>Upload for me!</button
 				>

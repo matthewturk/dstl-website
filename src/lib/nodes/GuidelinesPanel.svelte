@@ -2,7 +2,8 @@
 	import { Panel } from '@xyflow/svelte';
 	import { XCircle } from '@steeze-ui/heroicons';
 	import { Icon } from '@steeze-ui/svelte-icon';
-	import TutorialStepper from './TutorialStepper.svelte';
+	import TutorialStepper from '../guides/TutorialStepper.svelte';
+	import NarrativeGuide from '../guides/NarrativeGuide.svelte';
 	import { writable } from 'svelte/store';
 	let selected: string = 'howto';
 	export let visible = writable<boolean>(true);
@@ -28,10 +29,8 @@
 		</div>
 		{#if selected == 'howto'}
 			<TutorialStepper />
-		{:else if selected=="achievement"}
-		{:else if selected=="benchmarking"}
-		{:else if selected=="justification"}
+		{:else}
+			<NarrativeGuide bind:storyType={selected} />
 		{/if}
-		
 	</Panel>
 {/if}
