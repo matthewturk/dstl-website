@@ -21,6 +21,7 @@
 	export let resizable: boolean = false;
 	export let toolbar: boolean = true;
 	export let expanded: boolean = false;
+	export let highlighted: boolean = false;
 	let oldWidth: number | null | undefined = 0;
 	let oldHeight: number | null | undefined = 0;
 
@@ -85,7 +86,7 @@
 	</NodeToolbar>
 {/if}
 
-<div class="dstl-nodebase">
+<div class="dstl-nodebase" class:dstl-highlight={highlighted}>
 	<div class="dstl-nodetitle">
 		{#if icon}<span class="mr-2"><Icon size="1rem" src={icon} /></span>{/if}<span>{label}</span>
 	</div>

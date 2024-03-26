@@ -47,6 +47,7 @@
 		count: number;
 		numUnique: number;
 	}
+    let highlighted = false;
 	let statistics: IColumnStats[] = [];
 	let propertiesTable: TableSource = { head: [], body: [] };
 	const connections = useHandleConnections({
@@ -57,6 +58,7 @@
 	let table: aq.internal.ColumnTable;
 	let columns: string[] = [];
 
+	$: highlighted = data['highlighted'] || false;
 	$: nodeData = useNodesData($connections[0]?.source);
 	$: table = $nodeData?.table;
 	$: {
@@ -92,7 +94,7 @@
 
 </script>
 
-<NodeWrapper {id} {icon} label="Properties">
+<NodeWrapper {highlighted} {id} {icon} label="Properties">
 	<div class="max-h-72 overflow-y-auto max-w-2/3 overflow-x-auto">
 		<Table source={propertiesTable} interactive={true}/>
 	</div>

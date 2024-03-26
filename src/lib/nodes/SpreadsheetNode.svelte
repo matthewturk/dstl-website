@@ -43,6 +43,8 @@
 	const handler = new DataHandler([{}], { rowsPerPage: 10 });
 	const rows = handler.getRows();
 	let columns: string[] = [];
+	let highlighted = data['highlighted'] || false;
+	$: highlighted = data['highlighted'] || false;
 
 	const connections = useHandleConnections({
 		nodeId: id,
@@ -70,7 +72,7 @@
 
 </script>
 
-<NodeWrapper {id} label="Spreadsheet" resizable={true} {icon} {width} {height}>
+<NodeWrapper {highlighted} {id} label="Spreadsheet" resizable={true} {icon} {width} {height}>
 	<div class="max-w-full overflow-x-auto max-h-full space-y-2 table-container">
 		<Datatable {handler}>
 			<table class="table table-hover table-compact table-auto w-full">
