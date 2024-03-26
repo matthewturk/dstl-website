@@ -53,7 +53,7 @@
 
 {#if visible}
 	<Panel position="top-left" class="w-1/4">
-		<Stepper class="absolute w-full text-token card p-4 m-4" on:step={updateStep}>
+        <Stepper class="absolute w-full text-token card p-4 m-4" on:step={updateStep} on:complete={closePanel}>
 			<Step>
 				<svelte:fragment slot="header">Welcome!</svelte:fragment>
 				<p>Welcome to the <i>prototype</i> DSTL visualization dashboard.</p>
