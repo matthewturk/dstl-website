@@ -48,7 +48,7 @@
 
 	$: graphNode = $nodes.reduce((p, n) => p || n.type == 'graphWrapperNode', false);
 	$: aggregateNode = $nodes.reduce((p, n) => p || n.type == 'aggregateNode', false);
-    $: nodeAddLock = !(graphNode);// && aggregateNode);
+    $: nodeAddLock = !(graphNode && aggregateNode);
 </script>
 
 {#if visible}
@@ -113,19 +113,28 @@
 					right-clicking in the canvas.
 				</p>
 				<p>Right now, the Python and Monaco nodes don't do much, but they're under development.</p>
-				<p>For now, go ahead and add a <i>Graph Wrapper</i> node.</p>
+				<p>For now, go ahead and add a <i>Graph Wrapper</i> node and an
+				<i>Aggregate</i> node.  Once you've added them, you can move to
+				the next step.</p>
+			</Step>
+			<Step>
+<svelte:fragment slot="header">Aggregating Data</svelte:fragment>
+<p>The first thing we want to do is to aggregate our data, so that we can try to say something about the dataset as a whole.</p>
+<p>For instance, it would be useful to understand how membership is distributed as a function of the library class.</p>
+<p>Click on the output handle on the right side of the <i>Upload</i> node and drag it to handle on the left side of the <i>Aggregate</i> node.</p>
+			</Step>
+			<Step>
+<svelte:fragment slot="header">Processing Data</svelte:fragment>
+<p>Now, we want to group our data by the "Library Class" column.  So, choose that from the "Group By" dropdown.</p>
+<p>Then, choose the fields you want to operate on, and the operations you'd like to do.  Select "sum" and click on the "Total Population Served" item.</p>
+<p>Now, drag from the output handle to the input handle of the <i>Graph</i> node, and click <i>Process</i>.</p>
 			</Step>
 			<Step>
 				<svelte:fragment slot="header">Making a Graph</svelte:fragment>
 				<p>
-					Now, let's go ahead and connect these two nodes. Click the <i>handle</i> on the right side
-					of the <i>Upload</i> node and drag it to the handle on the left side of the <i>Graph</i> node.
+					Once you've connected these nodes, the processed data will flow between them.  Let's make a "Bar" chart, and for our X-axis let's choose "Library Class."  For our y-axis, we'll choose "Total Population Served."
 				</p>
-				<p>
-					Once you've connected, change the graph to be a "Line" plot with the "Wavelength" on the
-					x-axis and the "RedResponse" on the y-axis.
-				</p>
-				<p>This is the average response function of the human eye in the "R" cone!</p>
+				<p>The chart will automatically update, and we can see how the served population is distributed among different classes of library in Michigan.</p>
 			</Step>
 			<Step>
 				<svelte:fragment slot="header">Explore!</svelte:fragment>
@@ -134,8 +143,10 @@
 				</p>
 				<p>
 					We've got lots of plans in store -- including more complex aggregation, "canned" analysis
-					of common datasets, and walkthroughs for common story forms.
+					of common datasets, walkthroughs for common story forms, and
+					even Python code execution for digging really deeply.
 				</p>
+				<p>Stay tuned!</p>
 			</Step>
 		</Stepper>
 {/if}
