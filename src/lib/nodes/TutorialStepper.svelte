@@ -48,7 +48,7 @@
 
 	$: graphNode = $nodes.reduce((p, n) => p || n.type == 'graphWrapperNode', false);
 	$: aggregateNode = $nodes.reduce((p, n) => p || n.type == 'aggregateNode', false);
-	$: nodeAddLock = !(graphNode && aggregateNode);
+    $: nodeAddLock = !(graphNode);// && aggregateNode);
 </script>
 
 {#if visible}
