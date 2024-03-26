@@ -3,7 +3,7 @@
 	import { XCircle } from '@steeze-ui/heroicons';
 	import { Icon } from '@steeze-ui/svelte-icon';
 	import TutorialStepper from './TutorialStepper.svelte';
- import {writable} from 'svelte/store';
+	import { writable } from 'svelte/store';
 	let selected: string = 'howto';
 	export let visible = writable<boolean>(true);
 </script>
@@ -28,6 +28,10 @@
 		</div>
 		{#if selected == 'howto'}
 			<TutorialStepper />
+		{:else if selected=="achievement"}
+		{:else if selected=="benchmarking"}
+		{:else if selected=="justification"}
 		{/if}
+		
 	</Panel>
 {/if}
