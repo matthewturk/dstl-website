@@ -13,25 +13,10 @@
 	<svelte:fragment slot="header">
 		<!-- App Bar -->
 		<AppBar>
-			<svelte:fragment slot="lead">
-				<strong class="text-xl uppercase">DSTL</strong>
-			</svelte:fragment>
-			<svelte:fragment slot="trail">
-				<div data-netlify-identity-button>&nbsp;</div>
-			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
 	<!-- Page Route Content -->
 	<svelte:fragment slot="sidebarLeft">
-		<nav class="list-nav">
-			<ul>
-				<li><a href="/">Home</a></li>
-				<li><a href="/about">About DSTL</a></li>
-				<li><a href="/create">Create a Story</a></li>
-				<li><a href="/stories">My Stories</a></li>
-				<li><a href="/datasets">My Datasets</a></li>
-			</ul>
-		</nav>
 	</svelte:fragment>
 	<slot/>
 </AppShell>
