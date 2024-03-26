@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
-	import { PresentationChartLine } from '@steeze-ui/heroicons';
-	export const icon = PresentationChartLine;
+	import { ChartBarSquare } from '@steeze-ui/heroicons';
+	export const icon = ChartBarSquare;
 </script>
 
 <script lang="ts">
@@ -9,10 +9,9 @@
 		Position,
 		type NodeProps,
 		useHandleConnections,
-		useNodesData,
-		useSvelteFlow
+		useNodesData
 	} from '@xyflow/svelte';
-	import { Line, Scatter, Bar } from 'svelte-chartjs';
+	import { Bar } from 'svelte-chartjs';
 	import * as aq from 'arquero';
 	//import { Chart as ChartJS, Title, Tooltip, Legend, LineElement, LinearScale, PointElement, CategoryScale } from 'chart.js';
 	import 'chart.js/auto';
@@ -43,23 +42,20 @@
 	targetPosition;
 	export let sourcePosition: $$Props['sourcePosition'] = undefined;
 	sourcePosition;
-	const { updateNodeData } = useSvelteFlow();
-	let xColumn = data['xColumn'] || '';
-	let yColumn = data['yColumn'] || '';
-	let plotType = data['plotType'] || 'line';
+	let numColumns: string | number = 'auto';
+	let distColumn: string;
 
 	const connections = useHandleConnections({
 		nodeId: id,
 		type: 'target'
 	});
-	let table: aq.internal.ColumnTable = data['table'] || null;
+	let table: aq.internal.ColumnTable;
 	let columns: string[] = [];
 	let values: { [key: string]: any }[] = [];
 	let dataToPlot: ChartData<any, number[]> = { labels: [], datasets: [] };
 
 	$: nodeData = useNodesData($connections[0]?.source);
 	$: table = $nodeData?.table;
-	$: updateNodeData(id, { xColumn, yColumn, plotType });
 
 	$: {
 		if (table) {
@@ -69,37 +65,41 @@
 	}
 
 	$: {
-		dataToPlot = {
-			labels: values.map((e) => e[xColumn]),
-			datasets: [{ label: yColumn, data: values.map((e) => e[yColumn]) }]
-		};
+		if (table && table.columnNames().includes(distColumn)) {
+			// This was in the recipes for arquero
+			let binnedTable = table
+				.groupby({
+					b0: aq.bin(distColumn, { maxbins: 10 }),
+					b1: aq.bin(distColumn, { maxbins: 10, offset: 1 })
+				})
+				.count()
+				.impute(
+					{ count: () => 0 },
+					{
+						expand: {
+							b0: (d) => aq.op.sequence(...aq.op.bins(d.b0, 10))
+						}
+					} // include rows for all bin values
+				)
+				.orderby('b0');
+			let bins = binnedTable.objects();
+			console.log(bins);
+			console.log(binnedTable);
+			dataToPlot = {
+				labels: bins.map((bin) => `${bin.b0} - ${bin.b1}`),
+				datasets: [{ data: bins.map((bin) => bin.count) }]
+			};
+		}
 	}
 </script>
 
-<NodeWrapper {id} {icon} label="Graph" resizable={true}>
+<NodeWrapper {icon} label="Distribution" resizable={true}>
 	<Handle type="target" position={Position.Left} {isConnectable} />
 	<div class="flex flex-col">
-		<div class="p-2 m-2">
-			<label for="plotType">Plot Type</label>
-			<select id="plotType" bind:value={plotType}>
-				<option value="line">Line</option>
-				<option value="scatter">Scatter</option>
-				<option value="bar">Bar</option>
-			</select>
-		</div>
 		{#if values.length > 0}
 			<div class="p-2 m-2">
-				<label for="xcol">Select X-axis Column: </label>
-				<select id="xcol" bind:value={xColumn}>
-					{#each columns as field}
-						<option value={field}>{field}</option>
-					{/each}
-				</select>
-			</div>
-
-			<div class="p-2 m-2">
-				<label for="ycol">Select Y-axis Column: </label>
-				<select id="ycol" bind:value={yColumn}>
+				<label for="column">Select Column:</label>
+				<select id="column" bind:value={distColumn}>
 					{#each columns as field}
 						<option value={field}>{field}</option>
 					{/each}
@@ -108,13 +108,5 @@
 		{/if}
 	</div>
 
-	{#if plotType == 'line'}
-		<Line class="w-5/6 bg-white h-32" options={{ responsive: true }} data={dataToPlot} />
-	{:else if plotType == 'scatter'}
-		<Scatter class="w-5/6 bg-white h-32" options={{ responsive: true }} data={dataToPlot} />
-	{:else if plotType == 'bar'}
-		<Bar class="w-5/6 bg-white h-32" options={{ responsive: true }} data={dataToPlot} />
-	{:else}
-		<p>Plot type not supported</p>
-	{/if}
+	<Bar class="w-5/6 bg-white h-32" options={{ responsive: true }} data={dataToPlot} />
 </NodeWrapper>

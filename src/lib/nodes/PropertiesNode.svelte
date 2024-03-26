@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-	import { ArrowUpOnSquare, InformationCircle } from '@steeze-ui/heroicons';
+	import { InformationCircle } from '@steeze-ui/heroicons';
 	export const icon = InformationCircle;
 </script>
 
