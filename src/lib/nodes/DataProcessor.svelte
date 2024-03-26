@@ -26,6 +26,8 @@
 	import { icon as UploadFileIcon } from './UploadFileNode.svelte';
 	import PropertiesNode from './PropertiesNode.svelte';
 	import { icon as PropertiesIcon } from './PropertiesNode.svelte';
+	import DistributionChartNode from './DistributionChartNode.svelte';
+	import { icon as DistributionChartIcon } from './DistributionChartNode.svelte';
 	import GraphWrapperNode from './GraphWrapperNode.svelte';
 	import { icon as GraphWrapperIcon } from './GraphWrapperNode.svelte';
 	import SpreadsheetNode from './SpreadsheetNode.svelte';
@@ -42,6 +44,7 @@
 		importNode: ImportNode,
 		uploadNode: UploadFileNode,
 		propertiesNode: PropertiesNode,
+		distributionChartNode: DistributionChartNode,
 		graphWrapperNode: GraphWrapperNode,
 		spreadsheetNode: SpreadsheetNode,
 		monacoNode: MonacoNode,
@@ -54,6 +57,7 @@
 		uploadNode: UploadFileIcon,
 		propertiesNode: PropertiesIcon,
 		graphWrapperNode: GraphWrapperIcon,
+		distributionChartNode: DistributionChartIcon,
 		spreadsheetNode: SpreadsheetIcon,
 		monacoNode: MonacoIcon,
 		pythonNode: PythonIcon
