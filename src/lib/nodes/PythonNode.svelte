@@ -62,16 +62,20 @@
 			running = true;
 			$pyodide = await loadPyodide({ indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.0/full/' });
 			await $pyodide.loadPackage('pandas');
-			$pyodide.setStdout({batched: async (text: string) => {
-				console.log("stdout: ", text);
-				output.set($output + text + "\n");
-				await tick();
-			}});
-			$pyodide.setStderr({batched: async (text: string) => {
-				console.log("stderr: ", text);
-				output.set($output + text + "\n");
-				await tick(); // doesn't seem to actually work for me!
-			}});
+			$pyodide.setStdout({
+				batched: async (text: string) => {
+					console.log('stdout: ', text);
+					output.set($output + text + '\n');
+					await tick();
+				}
+			});
+			$pyodide.setStderr({
+				batched: async (text: string) => {
+					console.log('stderr: ', text);
+					output.set($output + text + '\n');
+					await tick(); // doesn't seem to actually work for me!
+				}
+			});
 		}
 		running = true;
 		await $pyodide.loadPackagesFromImports(script);
@@ -111,6 +115,6 @@
 			rows="9"
 			placeholder="Output"
 			readonly
-			/>
+		/>
 	</div>
 </NodeWrapper>

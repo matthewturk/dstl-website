@@ -70,7 +70,7 @@
 		link.remove();
 	}
 
-    async function clickedHelp() {
+	async function clickedHelp() {
 		$guidelinesVisible = true;
 	}
 </script>
