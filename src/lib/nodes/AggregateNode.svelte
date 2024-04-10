@@ -81,17 +81,23 @@
 		);
 		delete rollUps[column];
 		const v = table.groupby(column).rollup(rollUps);
-		updateNodeData(id, {column, aggregationType, table: v });
+		updateNodeData(id, { column, aggregationType, table: v });
 	}
 
 	$: nodeData = useNodesData($connections[0]?.source);
 	$: table = $nodeData?.table;
 	$: {
 		if (table) {
-			selectedColumns = table.columnNames().reduce((acc, col) => {
-				acc[col] = false;
-				return acc;
-			}, {});
+			for (const col of table.columnNames()) {
+				if (selectedColumns[col] === undefined) {
+					selectedColumns[col] = false;
+				}
+			}
+			for (const col of Object.keys(selectedColumns)) {
+				if (table.columnNames().indexOf(col) === -1) {
+					delete selectedColumns[col];
+				}
+			}
 		}
 	}
 
