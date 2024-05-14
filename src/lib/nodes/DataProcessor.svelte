@@ -46,7 +46,7 @@
 		propertiesNode: PropertiesNode,
 		//distributionChartNode: DistributionChartNode,
 		graphWrapperNode: GraphWrapperNode,
-		spreadsheetNode: SpreadsheetNode,
+		spreadsheetNode: SpreadsheetNode
 		//monacoNode: MonacoNode,
 		//pythonNode: PythonNode
 	};
@@ -120,13 +120,14 @@
 			{nodes}
 			{edges}
 			{nodeTypes}
+			snapGrid={[20, 20]}
 			on:panecontextmenu={handleContextMenu}
 			on:paneclick={handlePaneClick}
 			class="bg-surface-500/5"
 		>
-			<GuidelinesPanel bind:visible={guidelinesVisible}/>
+			<GuidelinesPanel bind:visible={guidelinesVisible} />
 			<MiniMap class="bg-surface-900" zoomable pannable height={120} />
-			<ControlPanel {guidelinesVisible}/>
+			<ControlPanel {guidelinesVisible} />
 			<Background class="bg-surface-variant-300" gap={16} />
 			{#if menu}
 				<ContextMenu

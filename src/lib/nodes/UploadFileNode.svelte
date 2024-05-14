@@ -46,7 +46,7 @@
 	$: highlighted = data['highlighted'] || false;
 	$: updateNodeData(id, { table });
 	$: {
-		if (data['inputTable'] && data['inputTable'] !== table){
+		if (data['inputTable'] && data['inputTable'] !== table) {
 			table = data['inputTable'];
 		}
 	}
