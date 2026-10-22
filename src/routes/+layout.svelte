@@ -13,7 +13,16 @@
 	<svelte:fragment slot="header">
 		<!-- App Bar -->
 		<AppBar>
-		</AppBar>
+			<svelte:fragment slot="lead">
+				<a href="/" class="text-xl font-bold">DSTL</a>
+			</svelte:fragment>
+			<nav class="flex gap-2">
+				<a class="btn btn-sm variant-ghost-surface" href="/datasets">Explore Your Data</a>
+				<a class="btn btn-sm variant-ghost-surface" href="/create">Create a Story</a>
+				<a class="btn btn-sm variant-ghost-surface" href="/stories">Examples</a>
+				<a class="btn btn-sm variant-ghost-surface" href="/about">About</a>
+			</nav>
+	</AppBar>
 	</svelte:fragment>
 	<!-- Page Route Content -->
 	<svelte:fragment slot="sidebarLeft">
