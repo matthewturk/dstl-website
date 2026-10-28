@@ -2,6 +2,8 @@
 	import { useNodes, type NodeTypes, useUpdateNodeInternals } from '@xyflow/svelte';
 	import { Icon, type IconSource } from '@steeze-ui/svelte-icon';
 	import { ChevronRight } from '@steeze-ui/heroicons';
+	import { nodeInfo } from './constants';
+	import { sizeFor } from './layout';
 
 	export let nodeTypes: NodeTypes = {};
 	export let nodeIcons: { [key: string]: IconSource } = {};
@@ -23,6 +25,8 @@
 				x: (left || 0) + 5,
 				y: (top || 0) + 5
 			},
+			width: sizeFor(nodeType).width,
+			height: sizeFor(nodeType).height,
 			data: {}
 		});
 		updateNodeInternals(newId);
@@ -40,7 +44,10 @@
 	{#each Object.entries(nodeTypes) as [nodeType, nodeComponent]}
 		<button type="button" on:click={addNode(nodeType)}
 			><span><Icon src={nodeIcons[nodeType] || ChevronRight} size="32" /></span>
-			<span>Add {nodeType.slice(0, -4) || ''}</span>
+			<span class="flex flex-col items-start text-left">
+				<span>{nodeInfo[nodeType]?.title ?? nodeType}</span>
+				<span class="text-xs opacity-80">{nodeInfo[nodeType]?.description ?? ''}</span>
+			</span>
 		</button>
 	{/each}
 </div>

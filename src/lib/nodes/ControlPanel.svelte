@@ -7,13 +7,16 @@
 		useNodes,
 		useEdges,
 		useUpdateNodeInternals,
+		useSvelteFlow,
 		addEdge,
 		isEdge,
 		type Edge
 	} from '@xyflow/svelte';
 	import { FileButton } from '@skeletonlabs/skeleton';
 	import { Icon } from '@steeze-ui/svelte-icon';
-	import { ArrowDownTray, ArrowUpTray, Trash, QuestionMarkCircle } from '@steeze-ui/heroicons';
+	import { ArrowDownTray, ArrowUpTray, Trash, Squares2x2 } from '@steeze-ui/heroicons';
+	import { onMount, tick } from 'svelte';
+	import { applyTidy } from './layout';
 	import * as aq from 'arquero';
 	import { writable } from 'svelte/store';
 	export let guidelinesVisible = writable<boolean>(true);
@@ -22,7 +25,32 @@
 	const nodes = useNodes();
 	const edges = useEdges();
 	const updateNodeInternals = useUpdateNodeInternals();
+	const { fitView } = useSvelteFlow();
+
+	function tidyUp() {
+		applyTidy(nodes, edges, fitView);
+	}
+	// The flow library's built-in buttons (zoom, fit, lock) only get plain native tooltips,
+	// so give them the same quick hover tips as our own buttons.
+	const builtInTips: Record<string, string> = {
+		'svelte-flow__controls-zoomin': 'Zoom in',
+		'svelte-flow__controls-zoomout': 'Zoom out',
+		'svelte-flow__controls-fitview': 'Fit all blocks on screen',
+		'svelte-flow__controls-interactive': 'Lock or unlock moving blocks'
+	};
+	onMount(async () => {
+		await tick();
+		for (const [cls, tip] of Object.entries(builtInTips)) {
+			const button = document.querySelector(`.${cls}`);
+			if (!button) continue;
+			button.classList.add('dstl-ctrl');
+			button.setAttribute('data-tip', tip);
+			button.removeAttribute('title'); // avoid a second, native tooltip
+		}
+	});
+
 	async function deleteAllNodes() {
+		if (!confirm('Remove every block and start over?')) return;
 		edges.set([]);
 		nodes.set([]);
 	}
@@ -70,24 +98,51 @@
 		link.remove();
 	}
 
-    async function clickedHelp() {
+	async function clickedHelp() {
 		$guidelinesVisible = true;
 	}
 </script>
 
 <Controls>
-	<ControlButton>
+	<ControlButton
+		class="dstl-ctrl"
+		data-tip="Open a saved workspace"
+		aria-label="Open a saved workspace"
+	>
 		<FileButton name="files" bind:this={fileInput} bind:files on:change={parseAndLoad} button=""
 			><Icon size="1.25rem" src={ArrowUpTray} /></FileButton
 		>
 	</ControlButton>
-	<ControlButton on:click={serializeAndSave}>
+	<ControlButton
+		class="dstl-ctrl"
+		data-tip="Save this workspace"
+		aria-label="Save this workspace"
+		on:click={serializeAndSave}
+	>
 		<Icon size="1.25rem" src={ArrowDownTray} />
 	</ControlButton>
-	<ControlButton on:click={deleteAllNodes}>
+	<ControlButton
+		class="dstl-ctrl"
+		data-tip="Tidy up: line the blocks up"
+		aria-label="Tidy up"
+		on:click={tidyUp}
+	>
+		<Icon size="1.25rem" src={Squares2x2} />
+	</ControlButton>
+	<ControlButton
+		class="dstl-ctrl"
+		data-tip="Remove all blocks"
+		aria-label="Remove all blocks"
+		on:click={deleteAllNodes}
+	>
 		<Icon size="1.25rem" src={Trash} />
 	</ControlButton>
-	<ControlButton on:click={clickedHelp}>
-		<Icon size="1.25rem" src={QuestionMarkCircle} />
+	<ControlButton
+		class="dstl-ctrl dstl-help"
+		data-tip="Show the quick tour"
+		aria-label="Show the quick tour"
+		on:click={clickedHelp}
+	>
+		?
 	</ControlButton>
 </Controls>
