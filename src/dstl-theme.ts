@@ -4,6 +4,13 @@ import type { CustomThemeConfig } from '@skeletonlabs/tw-plugin';
 export const dstlTheme: CustomThemeConfig = {
 	name: 'dstl',
 	properties: {
+		// primary: PLA Navy  #334C90
+		// secondary: Berry #5C0E41
+		// tertiary: Arches Blue #00A0D4
+		// success: Prairie #006230
+		// warning: Harvest  #FCB316
+		// error: Berry #5C0E41
+		// surface: Stone  #7C8180
 		// fonts (style guide: Inter for UI/body, IBM Plex Mono for data)
 		'--theme-font-family-base': "Inter, system-ui, sans-serif",
 		'--theme-font-family-heading': "Aleo, Georgia, serif",
