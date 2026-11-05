@@ -1,0 +1,108 @@
+import type { CustomThemeConfig } from '@skeletonlabs/tw-plugin';
+
+// DSTL brand theme. Colors come from the DSTL Style Guide palette.
+export const dstlTheme: CustomThemeConfig = {
+	name: 'dstl',
+	properties: {
+		// primary: PLA Navy  #334C90
+		// secondary: Berry #5C0E41
+		// tertiary: Arches Blue #00A0D4
+		// success: Prairie #006230
+		// warning: Harvest  #FCB316
+		// error: Berry #5C0E41
+		// surface: Stone  #7C8180
+		// fonts (style guide: Inter for UI/body, IBM Plex Mono for data)
+		'--theme-font-family-base': "Inter, system-ui, sans-serif",
+		'--theme-font-family-heading': "Aleo, Georgia, serif",
+		'--theme-font-color-base': '0 0 0',
+		'--theme-font-color-dark': '255 255 255',
+		'--theme-rounded-base': '6px',
+		'--theme-rounded-container': '12px',
+		'--theme-border-base': '1px',
+		// text colors that sit ON each brand color
+		'--on-primary': '255 255 255',
+		'--on-secondary': '255 255 255',
+		'--on-tertiary': '0 0 0',
+		'--on-success': '255 255 255',
+		'--on-warning': '0 0 0',
+		'--on-error': '255 255 255',
+		'--on-surface': '255 255 255',
+		// primary: base #334C90
+		'--color-primary-50': '239 241 246',
+		'--color-primary-100': '218 223 235',
+		'--color-primary-200': '186 194 217',
+		'--color-primary-300': '149 162 197',
+		'--color-primary-400': '100 119 171',
+		'--color-primary-500': '51 76 144',
+		'--color-primary-600': '43 65 122',
+		'--color-primary-700': '36 53 101',
+		'--color-primary-800': '28 42 79',
+		'--color-primary-900': '20 30 58',
+		// secondary: base #5C0E41
+		'--color-secondary-50': '242 236 240',
+		'--color-secondary-100': '226 212 221',
+		'--color-secondary-200': '200 173 190',
+		'--color-secondary-300': '170 130 156',
+		'--color-secondary-400': '131 72 111',
+		'--color-secondary-500': '92 14 65',
+		'--color-secondary-600': '78 12 55',
+		'--color-secondary-700': '64 10 46',
+		'--color-secondary-800': '51 8 36',
+		'--color-secondary-900': '37 6 26',
+		// tertiary: base #00A0D4
+		'--color-tertiary-50': '235 247 252',
+		'--color-tertiary-100': '209 238 247',
+		'--color-tertiary-200': '168 223 240',
+		'--color-tertiary-300': '122 206 233',
+		'--color-tertiary-400': '61 183 222',
+		'--color-tertiary-500': '0 160 212',
+		'--color-tertiary-600': '0 136 180',
+		'--color-tertiary-700': '0 112 148',
+		'--color-tertiary-800': '0 88 117',
+		'--color-tertiary-900': '0 64 85',
+		// success: base #006230
+		'--color-success-50': '235 242 238',
+		'--color-success-100': '209 227 218',
+		'--color-success-200': '168 202 185',
+		'--color-success-300': '122 173 147',
+		'--color-success-400': '61 136 98',
+		'--color-success-500': '0 98 48',
+		'--color-success-600': '0 83 41',
+		'--color-success-700': '0 69 34',
+		'--color-success-800': '0 54 26',
+		'--color-success-900': '0 39 19',
+		// warning: base #FCB316
+		'--color-warning-50': '255 249 236',
+		'--color-warning-100': '254 241 213',
+		'--color-warning-200': '254 229 176',
+		'--color-warning-300': '253 215 134',
+		'--color-warning-400': '253 197 78',
+		'--color-warning-500': '252 179 22',
+		'--color-warning-600': '214 152 19',
+		'--color-warning-700': '176 125 15',
+		'--color-warning-800': '139 98 12',
+		'--color-warning-900': '101 72 9',
+		// error: base #5C0E41
+		'--color-error-50': '242 236 240',
+		'--color-error-100': '226 212 221',
+		'--color-error-200': '200 173 190',
+		'--color-error-300': '170 130 156',
+		'--color-error-400': '131 72 111',
+		'--color-error-500': '92 14 65',
+		'--color-error-600': '78 12 55',
+		'--color-error-700': '64 10 46',
+		'--color-error-800': '51 8 36',
+		'--color-error-900': '37 6 26',
+		// surface: base #7C8180
+		'--color-surface-50': '245 245 245',
+		'--color-surface-100': '231 232 232',
+		'--color-surface-200': '210 212 212',
+		'--color-surface-300': '187 189 189',
+		'--color-surface-400': '155 159 158',
+		'--color-surface-500': '124 129 128',
+		'--color-surface-600': '105 110 109',
+		'--color-surface-700': '87 90 90',
+		'--color-surface-800': '68 71 70',
+		'--color-surface-900': '50 52 51',
+	}
+};

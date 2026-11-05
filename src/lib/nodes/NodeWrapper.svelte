@@ -66,7 +66,6 @@
 		});
 		updateNodeInternals($nodes[$nodes.length - 1].id);
 	}
-
 </script>
 
 {#if resizable}
@@ -74,13 +73,26 @@
 {/if}
 {#if toolbar}
 	<NodeToolbar position={Position.Top} align="start">
-		<button type="button" class="btn-icon btn-icon-sm variant-filled" on:click={removeNode}
-			><Icon size="1.25rem" src={Trash} /></button
+		<button
+			type="button"
+			class="btn-icon btn-icon-sm variant-filled"
+			title="Delete this block"
+			aria-label="Delete this block"
+			on:click={removeNode}><Icon size="1.25rem" src={Trash} /></button
 		>
-		<button type="button" class="btn-icon btn-icon-sm variant-filled" on:click={duplicateNode}
-			><Icon size="1.25rem" src={DocumentDuplicate} /></button
+		<button
+			type="button"
+			class="btn-icon btn-icon-sm variant-filled"
+			title="Copy this block"
+			aria-label="Copy this block"
+			on:click={duplicateNode}><Icon size="1.25rem" src={DocumentDuplicate} /></button
 		>
-		<button type="button" class="btn-icon btn-icon-sm variant-filled" on:click={expandNode}
+		<button
+			type="button"
+			class="btn-icon btn-icon-sm variant-filled"
+			title={expanded ? 'Shrink this block' : 'Expand this block'}
+			aria-label={expanded ? 'Shrink this block' : 'Expand this block'}
+			on:click={expandNode}
 			><Icon size="1.25rem" src={expanded ? ArrowsPointingIn : ArrowsPointingOut} /></button
 		>
 	</NodeToolbar>

@@ -69,12 +69,13 @@
 			handler.setRows(table?.objects());
 		}
 	}
-
 </script>
 
-<NodeWrapper {highlighted} {id} label="Spreadsheet" resizable={true} {icon} {width} {height}>
-	<div class="max-w-full overflow-x-auto max-h-full space-y-2 table-container">
-		<Datatable {handler}>
+<NodeWrapper {highlighted} {id} label="Data Table" resizable={true} {icon} {width} {height}>
+	<!-- h-full gives the table a fixed height to scroll inside; "nowheel nodrag" lets the mouse wheel
+	     and scrollbar scroll the rows instead of zooming or dragging the canvas -->
+	<div class="h-full w-full nowheel nodrag">
+		<Datatable {handler} class="h-full">
 			<table class="table table-hover table-compact table-auto w-full">
 				<thead>
 					<tr>
@@ -89,10 +90,10 @@
 					</tr>
 				</thead>
 				<tbody>
-					{#each ($rows || []) as row}
+					{#each $rows || [] as row}
 						<tr>
 							{#each rowCols as column}
-								<td>{row[column]}</td>
+								<td>{row[column] ?? '—'}</td>
 							{/each}
 						</tr>
 					{/each}

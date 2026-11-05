@@ -37,16 +37,18 @@
 	import PythonNode from './PythonNode.svelte';
 	import { icon as PythonIcon } from './PythonNode.svelte';
 	import ContextMenu from './ContextMenu.svelte';
+	import AutoLayout from './AutoLayout.svelte';
+	import { tidyLayout } from './layout';
 
 	const nodeTypes: NodeTypes = {
-		sortNode: SortNode,
-		aggregateNode: AggregateNode,
-		//importNode: ImportNode,
 		uploadNode: UploadFileNode,
 		propertiesNode: PropertiesNode,
-		//distributionChartNode: DistributionChartNode,
-		graphWrapperNode: GraphWrapperNode,
 		spreadsheetNode: SpreadsheetNode,
+		sortNode: SortNode,
+		aggregateNode: AggregateNode,
+		graphWrapperNode: GraphWrapperNode
+		//importNode: ImportNode,
+		//distributionChartNode: DistributionChartNode,
 		//monacoNode: MonacoNode,
 		//pythonNode: PythonNode
 	};
@@ -63,31 +65,34 @@
 		pythonNode: PythonIcon
 	};
 
-	const nodes = writable<Node[]>([
+	const startNodes: Node[] = [
 		{
 			id: Math.random().toString(36).substring(7),
 			type: 'uploadNode',
-			position: { x: 500, y: 100 },
+			position: { x: 0, y: 0 },
 			data: { values: writable([{}]), columns: writable([]) }
 		},
 		{
 			id: Math.random().toString(36).substring(7),
 			type: 'propertiesNode',
-			position: { x: 600, y: 0 },
+			position: { x: 0, y: 0 },
 			data: {}
 		},
 		{
 			id: Math.random().toString(36).substring(7),
 			type: 'spreadsheetNode',
-			position: { x: 750, y: 100 },
+			position: { x: 0, y: 0 },
 			data: { columns: [], values: [{}] }
 		}
-	]);
+	];
 
 	const initialEdges: Edge[] = [
-		{ id: Math.random().toString(36).substring(7), source: $nodes[0].id, target: $nodes[1].id },
-		{ id: Math.random().toString(36).substring(7), source: $nodes[0].id, target: $nodes[2].id }
+		{ id: Math.random().toString(36).substring(7), source: startNodes[0].id, target: startNodes[1].id },
+		{ id: Math.random().toString(36).substring(7), source: startNodes[0].id, target: startNodes[2].id }
 	];
+
+	// Blocks start neatly arranged left-to-right instead of piled on top of each other
+	const nodes = writable<Node[]>(tidyLayout(startNodes, initialEdges));
 
 	const edges = writable<Edge[]>(initialEdges);
 
@@ -114,31 +119,36 @@
 	let guidelinesVisible = writable<boolean>(true);
 </script>
 
-<div class="w-full h-full" bind:clientWidth={width} bind:clientHeight={height}>
+<div class="flex w-full h-full gap-3">
 	<SvelteFlowProvider>
-		<SvelteFlow
-			{nodes}
-			{edges}
-			{nodeTypes}
-			on:panecontextmenu={handleContextMenu}
-			on:paneclick={handlePaneClick}
-			class="bg-surface-500/5"
-		>
-			<GuidelinesPanel bind:visible={guidelinesVisible}/>
-			<MiniMap class="bg-surface-900" zoomable pannable height={120} />
-			<ControlPanel {guidelinesVisible}/>
-			<Background class="bg-surface-variant-300" gap={16} />
-			{#if menu}
-				<ContextMenu
-					{nodeTypes}
-					{nodeIcons}
-					onClick={handlePaneClick}
-					top={menu.top}
-					left={menu.left}
-					right={menu.right}
-					bottom={menu.bottom}
-				/>
-			{/if}
-		</SvelteFlow>
+		<GuidelinesPanel visible={guidelinesVisible} />
+		<div class="flex-1 min-w-0 h-full" bind:clientWidth={width} bind:clientHeight={height}>
+			<SvelteFlow
+				{nodes}
+				{edges}
+				{nodeTypes}
+				fitView
+				fitViewOptions={{ padding: 0.1, maxZoom: 1 }}
+				on:panecontextmenu={handleContextMenu}
+				on:paneclick={handlePaneClick}
+				class="bg-surface-500/5"
+			>
+				<MiniMap class="bg-surface-900" zoomable pannable height={120} />
+				<ControlPanel {guidelinesVisible} />
+				<AutoLayout />
+				<Background class="bg-surface-variant-300" gap={16} />
+				{#if menu}
+					<ContextMenu
+						{nodeTypes}
+						{nodeIcons}
+						onClick={handlePaneClick}
+						top={menu.top}
+						left={menu.left}
+						right={menu.right}
+						bottom={menu.bottom}
+					/>
+				{/if}
+			</SvelteFlow>
+		</div>
 	</SvelteFlowProvider>
 </div>
