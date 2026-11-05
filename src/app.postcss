@@ -15,11 +15,11 @@ a.netlify-identity-button {
 
 @layer components {
 	.dstl-nodebase {
-		@apply flex flex-col max-w-[800px] max-h-[600px] border w-full border-solid border-gray-200 h-full rounded-2xl bg-surface-200/70 shadow-[0_7px_9px_0_rgba(0,0,0,0.02)];
+		@apply flex flex-col max-w-[800px] max-h-[600px] border w-full border-solid border-surface-300 h-full rounded-2xl bg-surface-200/70 shadow-[0_7px_9px_0_rgba(0,0,0,0.02)];
 	}
 
 	.dstl-nodetitle {
-		@apply text-xs flex px-3 py-2 border-b border-solid border-gray-200 font-mono font-semibold rounded-t-2xl text-[#0F172A]
+		@apply text-xs flex px-3 py-2 border-b border-solid border-surface-300 font-mono font-semibold rounded-t-2xl text-primary-900
 	}
 
 	.dstl-nodeslot {
@@ -27,7 +27,7 @@ a.netlify-identity-button {
 	}
 
 	.dstl-highlight {
-		@apply border border-solid border-red-500 border-4;
+		@apply border border-solid border-secondary-500 border-4;
 	}
 }
 
@@ -36,10 +36,16 @@ a.netlify-identity-button {
 /* The flow library paints every control icon solid (fill: currentColor), which turns our
    outline icons into blobs. Draw them as outlines instead, and a little larger. */
 button.dstl-ctrl svg {
-	fill: none;
-	stroke: currentColor;
+	fill: currentColor;
+	stroke: none;
 	max-width: 16px;
 	max-height: 16px;
+}
+button.dstl-ctrl {
+	color: #000000; 
+}
+button.dstl-ctrl:hover {
+	color: #5C0E41;
 }
 
 /* The "?" help button is plain text so it is always clearly visible */
@@ -63,7 +69,7 @@ button.dstl-ctrl[data-tip]:focus-visible::after {
 	z-index: 50;
 	padding: 4px 8px;
 	border-radius: 6px;
-	background: #0f172a;
+	background: #334c90;
 	color: #fff;
 	font-size: 11px;
 	font-weight: 500;

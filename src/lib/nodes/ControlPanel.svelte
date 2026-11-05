@@ -110,7 +110,7 @@
 		aria-label="Open a saved workspace"
 	>
 		<FileButton name="files" bind:this={fileInput} bind:files on:change={parseAndLoad} button=""
-			><Icon size="1.25rem" src={ArrowUpTray} /></FileButton
+			><Icon theme="solid" size="1.25rem" src={ArrowUpTray} /></FileButton
 		>
 	</ControlButton>
 	<ControlButton
@@ -119,7 +119,7 @@
 		aria-label="Save this workspace"
 		on:click={serializeAndSave}
 	>
-		<Icon size="1.25rem" src={ArrowDownTray} />
+		<Icon theme="solid" size="1.25rem" src={ArrowDownTray} />
 	</ControlButton>
 	<ControlButton
 		class="dstl-ctrl"
@@ -127,7 +127,7 @@
 		aria-label="Tidy up"
 		on:click={tidyUp}
 	>
-		<Icon size="1.25rem" src={Squares2x2} />
+		<Icon theme="solid" size="1.25rem" src={Squares2x2} />
 	</ControlButton>
 	<ControlButton
 		class="dstl-ctrl"
@@ -135,7 +135,7 @@
 		aria-label="Remove all blocks"
 		on:click={deleteAllNodes}
 	>
-		<Icon size="1.25rem" src={Trash} />
+		<Icon theme="solid" size="1.25rem" src={Trash} />
 	</ControlButton>
 	<ControlButton
 		class="dstl-ctrl dstl-help"

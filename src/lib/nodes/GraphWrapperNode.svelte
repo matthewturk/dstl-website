@@ -57,8 +57,8 @@
 	let numericColumns: string[] = [];
 	let rows: { [key: string]: any }[] = [];
 
-	const COLOR = 'rgb(59, 130, 246)';
-	const COLOR_FILL = 'rgba(59, 130, 246, 0.65)';
+	const COLOR = 'rgb(51, 76, 144)';
+	const COLOR_FILL = 'rgba(51, 76, 144, 0.65)';
 
 	$: nodeData = useNodesData($connections[0]?.source);
 	$: table = $nodeData?.table;

@@ -63,9 +63,15 @@
 <NodeWrapper {highlighted} {id} {icon} label="Upload Data">
 	<div class="flex flex-col items-start gap-2">
 		<p class="font-semibold text-sm">{files?.[0]?.name || sampleName || 'No data loaded yet'}</p>
-		<FileButton name="file" multiple="false" bind:files on:change={parseFile}>Choose a CSV file</FileButton>
-		<button type="button" class="btn btn-sm variant-ghost-surface" on:click={useSample}
-			>Use sample library data</button
+		<FileButton
+			name="file"
+			multiple="false"
+			button="btn variant-filled-secondary"
+			bind:files
+			on:change={parseFile}>Choose a CSV file</FileButton
+		>
+		<button type="button" class="btn btn-sm variant-filled-primary" on:click={useSample}
+			>Use the sample data</button
 		>
 	</div>
 	<Handle type="source" position={Position.Right} {isConnectable} />

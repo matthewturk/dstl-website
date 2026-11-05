@@ -4,7 +4,7 @@
 <div class="container mx-auto p-8 space-y-8">
 
 <Avatar initials="MT" />
-	<h1 class="h1">Welcome to <span class="bg-gradient-to-br from-blue-500 to-cyan-300 bg-clip-text text-transparent box-decoration-clone">DSTL</span>!</h1>
+	<h1 class="h1">Welcome to <span class="bg-gradient-to-br from-primary-500 to-tertiary-500 bg-clip-text text-transparent box-decoration-clone">DSTL</span>!</h1>
 	<p>This is the DSTL website.</p>
 	<p>
 		Turn your library's data into clear charts and stories. No coding needed, and your data never

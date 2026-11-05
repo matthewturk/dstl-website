@@ -117,7 +117,7 @@
 			No file handy? Use our sample: public library data from Michigan (2020-2021). The rest of the
 			tour uses it.
 		</p>
-		<button type="button" class="btn variant-filled-secondary" on:click={useSampleData}
+		<button type="button" class="btn variant-filled-primary" on:click={useSampleData}
 			>Use the sample data</button
 		>
 	</Step>
