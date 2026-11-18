@@ -1,7 +1,7 @@
 <script lang="ts">
 </script>
 
-<form method="POST" class="rounded bg-gray-400 m-2 p-4 w-1/2" action="?/login">
+<form method="POST" class="rounded bg-surface-400 m-2 p-4 w-1/2" action="?/login">
 	<label class="label">
 		<span>Username</span>
 		<input class="input" type="text" name="name" placeholder="username" />

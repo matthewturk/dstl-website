@@ -26,7 +26,7 @@
 			icon: 'motivations-needsassess.png',
 			title: 'Understand the real needs of their communities',
 			value: 'needsassess',
-			text: 'Data can provide insights beyond anecodtal experiences or intuition.'
+			text: 'Data can provide insights beyond anecdotal experiences or intuition.'
 		},
 		{
 			icon: 'motivations-meetneeds.png',

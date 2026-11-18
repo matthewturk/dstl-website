@@ -3,6 +3,7 @@ import type { Config } from 'tailwindcss';
 import forms from '@tailwindcss/forms';
 import typography from '@tailwindcss/typography';
 import { skeleton } from '@skeletonlabs/tw-plugin';
+import { dstlTheme } from './src/dstl-theme.ts';
 
 export default {
 	darkMode: 'class',
@@ -18,6 +19,7 @@ export default {
 		typography,
 		skeleton({
 			themes: {
+				custom: [dstlTheme],
 				preset: [
 					{ name: 'modern', enhancements: true },
 					{ name: 'wintry', enhancements: true },

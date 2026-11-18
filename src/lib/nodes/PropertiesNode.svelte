@@ -71,30 +71,35 @@
 
 	$: {
 		if (table) {
+			// start from an empty list each time, otherwise rows pile up after a second upload
+			const stats: IColumnStats[] = [];
 			columns.forEach((c) => {
-				statistics.push({
+				const r: any = table
+					.rollup({
+						min: aq.op.min(c),
+						max: aq.op.max(c),
+						mean: aq.op.mean(c),
+						count: aq.op.valid(c),
+						numUnique: aq.op.distinct(c)
+					})
+					.objects()[0];
+				stats.push({
 					column: c,
-					...table
-						.rollup({
-							min: aq.op.min(c),
-							max: aq.op.max(c),
-							mean: aq.op.mean(c),
-							count: aq.op.count(),
-							numUnique: aq.op.distinct(c)
-						})
-						.objects()[0]
+					...r,
+					mean: typeof r.mean === 'number' ? Math.round(r.mean * 100) / 100 : r.mean
 				} as IColumnStats);
 			});
+			statistics = stats;
 			propertiesTable = {
-				head: ['Column', 'Min', 'Max', 'Mean', 'Count', 'Num Unique'],
-				body: tableMapperValues(statistics, ['column', 'min', 'max', 'mean', 'count', 'numUnique']),
+				head: ['Column', 'Min', 'Max', 'Average', 'Rows filled in', 'Unique values'],
+				body: tableMapperValues(statistics, ['column', 'min', 'max', 'mean', 'count', 'numUnique'])
 			};
 		}
 	}
 
 </script>
 
-<NodeWrapper {highlighted} {id} {icon} label="Properties">
+<NodeWrapper {highlighted} {id} {icon} label="Column Summary">
 	<div class="max-h-72 overflow-y-auto max-w-2/3 overflow-x-auto">
 		<Table source={propertiesTable} interactive={true}/>
 	</div>
