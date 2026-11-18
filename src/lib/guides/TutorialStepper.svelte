@@ -167,13 +167,14 @@
 	</Step>
 	<Step>
 		<svelte:fragment slot="header">Summarize</svelte:fragment>
-		<p>In the <i>Group &amp; Summarize</i> block:</p>
+		<p>In the <i>Group &amp; Summarize</i> block, for example:</p>
 		<p>
 			1. Set <b>Group rows by</b> to <b>Library Class</b>.<br />
 			2. Set <b>Calculate</b> to <b>Total (sum)</b>.<br />
 			3. Click <b>Total Population Served</b> to select it.<br />
 			4. Press <b>Apply</b>.
 		</p>
+		<p>Feel free to choose other options to explore your data.</p>
 		<p>
 			Column Summary and Data Table will still show your original data, because they are
 			connected to Upload Data. The grouped result appears in the Chart, which we connect next.
